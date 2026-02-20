@@ -28,6 +28,8 @@ export interface ProjectItem {
   techStack: string[];
   solution: string;
   outcome: string;
+  highlights?: string[];
+  responsibilities?: string[];
 }
 
 export interface BlogPost {
@@ -56,12 +58,13 @@ export interface ResumeData {
       phone: string;
       email: string;
       location: string;
+      wechat?: string;
     };
     summary: string[];
   };
   skills: {
     title: string;
-    categories: Record<string, string[]>;
+    categories: Record<string, { icon: string; items: { name: string; icon: string }[] }>;
   };
   experience: {
     title: string;

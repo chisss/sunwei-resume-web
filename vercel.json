@@ -1,4 +1,7 @@
 {
+  "git": {
+    "submodules": true
+  },
   "rewrites": [
     {
       "source": "/(.*)",
