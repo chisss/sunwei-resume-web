@@ -31,7 +31,7 @@ const Experience: React.FC<ExperienceProps> = ({ data }) => {
               className="relative pl-8 md:pl-12"
             >
               {/* Timeline Dot */}
-              <div className="absolute -left-[5px] top-2 w-3 h-3 rounded-full bg-primary ring-4 ring-background"></div>
+              <div className="absolute -left-1.5 top-2 w-3 h-3 rounded-full bg-primary ring-4 ring-background"></div>
 
               <div className="bg-surface rounded-2xl p-6 md:p-8 border border-white/5 hover:border-white/10 transition-all">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-2">

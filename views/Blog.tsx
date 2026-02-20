@@ -1,15 +1,15 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { ResumeData } from '../types';
 import {
-  BookOpen, Calendar, Clock, Hash, ArrowRight, ArrowLeft,
-  FolderOpen, Tag, Filter, ChevronRight
+  BookOpen, Calendar, Clock, ArrowRight, ArrowLeft,
+  FolderOpen, Tag
 } from 'lucide-react';
-import { blogArticles, BlogArticle } from 'virtual:blog-data';
+import { blogArticles } from 'virtual:blog-data';
 
 interface BlogProps {
   data: ResumeData;
@@ -18,11 +18,15 @@ interface BlogProps {
 const Blog: React.FC<BlogProps> = ({ data }) => {
   const isZh = data.blog.title.includes('技术') || data.blog.title.includes('洞见');
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
 
   const currentSlug = searchParams.get('article');
   const currentCategory = searchParams.get('category') || 'all';
   const currentTag = searchParams.get('tag') || '';
+
+  // Scroll to top when switching between list and detail view
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentSlug]);
 
   // Extract unique categories and tags
   const categories = useMemo(() => {

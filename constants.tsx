@@ -1,8 +1,7 @@
 import { ResumeData } from './types';
 import {
-  Code, Server, Database, Cloud, Terminal, Layers,
-  Cpu, Globe, Shield, Zap, Box, Activity,
-  GitBranch, Lock, MessageSquare, BarChart, Bot, Sparkles
+  Code, Server, Database, Cloud, Layers,
+  Globe, Shield, Bot
 } from 'lucide-react';
 
 // 请将您的照片命名为 avatar.png 并放在 public 目录下
@@ -777,14 +776,4 @@ export const SKILL_CATEGORY_ICONS: Record<string, any> = {
   'globe': Globe,
   'bot': Bot,
   'shield': Shield,
-};
-
-// 向后兼容 (旧的SKILL_ICONS 不再使用，但保留避免报错)
-export const SKILL_ICONS: Record<string, any> = {
-  'Languages & Core': Code,
-  'Microservices': Layers,
-  'Cloud & DevOps': Cloud,
-  'Middleware': Server,
-  'Database': Database,
-  'Frontend & Tools': Globe
 };
