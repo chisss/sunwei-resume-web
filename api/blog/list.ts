@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getRepoTree, getFileContent } from './_lib/github';
-import { parseArticle, type BlogArticleMeta } from './_lib/parse';
+import { getRepoTree, getFileContent } from './_lib/github.js';
+import { parseArticle, type BlogArticleMeta } from './_lib/parse.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
