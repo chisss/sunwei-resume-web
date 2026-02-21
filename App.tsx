@@ -7,6 +7,7 @@ import Projects from './views/Projects';
 import Blog from './views/Blog';
 import { RESUME_DATA } from './constants';
 import { Language } from './types';
+import { preloadBlogList } from './hooks/useBlog';
 
 const PAGE_TITLES: Record<string, Record<Language, string>> = {
   '/': { zh: '孙伟 | 资深Java工程师', en: 'Sun Wei | Senior Java Engineer' },
@@ -18,6 +19,11 @@ const PAGE_TITLES: Record<string, Record<Language, string>> = {
 function App() {
   const [lang, setLang] = useState<Language>('zh');
   const location = useLocation();
+
+  // 首页后台预加载博客列表
+  useEffect(() => {
+    preloadBlogList();
+  }, []);
 
   // Scroll to top on route change
   useEffect(() => {

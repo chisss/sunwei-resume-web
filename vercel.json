@@ -1,10 +1,7 @@
 {
-  "git": {
-    "submodules": true
-  },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]

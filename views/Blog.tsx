@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -7,9 +7,9 @@ import rehypeRaw from 'rehype-raw';
 import { ResumeData } from '../types';
 import {
   BookOpen, Calendar, Clock, ArrowRight, ArrowLeft,
-  FolderOpen, Tag
+  FolderOpen, Tag, Loader2
 } from 'lucide-react';
-import { blogArticles } from 'virtual:blog-data';
+import { useBlogList, useBlogArticle } from '../hooks/useBlog';
 
 interface BlogProps {
   data: ResumeData;
@@ -23,6 +23,19 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
   const currentCategory = searchParams.get('category') || 'all';
   const currentTag = searchParams.get('tag') || '';
 
+  // 获取文章列表
+  const { articles: blogArticles, loading: listLoading, error: listError } = useBlogList();
+
+  // 根据 slug 找到文章元信息（含 path）
+  const currentArticleMeta = useMemo(() => {
+    if (!currentSlug) return null;
+    return blogArticles.find(a => a.slug === currentSlug) || null;
+  }, [currentSlug, blogArticles]);
+
+  // 按需加载文章内容
+  const { article: currentArticle, loading: articleLoading, error: articleError } =
+    useBlogArticle(currentArticleMeta?.path || null);
+
   // Scroll to top when switching between list and detail view
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,7 +46,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
     const cats = new Set<string>();
     blogArticles.forEach(a => cats.add(a.category));
     return Array.from(cats).sort();
-  }, []);
+  }, [blogArticles]);
 
   const allTags = useMemo(() => {
     const tagCount: Record<string, number> = {};
@@ -45,7 +58,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
     return Object.entries(tagCount)
       .sort((a, b) => b[1] - a[1])
       .map(([tag, count]) => ({ tag, count }));
-  }, []);
+  }, [blogArticles]);
 
   // Filter articles
   const filteredArticles = useMemo(() => {
@@ -54,13 +67,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
       if (currentTag && !a.tags.includes(currentTag)) return false;
       return true;
     });
-  }, [currentCategory, currentTag]);
-
-  // Current article for detail view
-  const currentArticle = useMemo(() => {
-    if (!currentSlug) return null;
-    return blogArticles.find(a => a.slug === currentSlug) || null;
-  }, [currentSlug]);
+  }, [blogArticles, currentCategory, currentTag]);
 
   const handleCategoryClick = (cat: string) => {
     const params = new URLSearchParams();
@@ -92,7 +99,48 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
   };
 
   // ========= Article Detail View =========
-  if (currentArticle) {
+  if (currentSlug) {
+    // 加载中
+    if (articleLoading || (!currentArticle && !articleError)) {
+      return (
+        <div className="min-h-screen pt-24 pb-20">
+          <div className="max-w-4xl w-full mx-auto px-4">
+            <div className="animate-pulse">
+              <div className="h-4 w-32 bg-white/5 rounded mb-8" />
+              <div className="h-8 w-3/4 bg-white/5 rounded mb-4" />
+              <div className="h-4 w-1/2 bg-white/5 rounded mb-8" />
+              <div className="space-y-3">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div key={i} className="h-4 bg-white/5 rounded" style={{ width: `${70 + Math.random() * 30}%` }} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // 加载失败
+    if (articleError || !currentArticle) {
+      return (
+        <div className="min-h-screen pt-24 pb-20">
+          <div className="max-w-4xl w-full mx-auto px-4 text-center py-20">
+            <BookOpen size={48} className="mx-auto mb-4 text-gray-500 opacity-30" />
+            <p className="text-gray-400 mb-4">
+              {isZh ? '文章加载失败' : 'Failed to load article'}
+            </p>
+            <p className="text-sm text-gray-600 mb-6">{articleError}</p>
+            <button
+              onClick={handleBackToList}
+              className="px-4 py-2 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
+            >
+              {isZh ? '返回文章列表' : 'Back to articles'}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-screen pt-24 pb-20">
         <div className="max-w-4xl w-full mx-auto px-4">
@@ -196,6 +244,56 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
   }
 
   // ========= Article List View =========
+
+  // 列表加载中
+  if (listLoading) {
+    return (
+      <div className="min-h-screen pt-24 pb-20">
+        <div className="max-w-5xl w-full mx-auto px-4">
+          {/* Header skeleton */}
+          <div className="text-center mb-12 animate-pulse">
+            <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6">
+              <Loader2 size={32} className="text-secondary animate-spin" />
+            </div>
+            <div className="h-10 w-64 bg-white/5 rounded mx-auto mb-4" />
+            <div className="h-5 w-48 bg-white/5 rounded mx-auto" />
+          </div>
+          {/* Card skeletons */}
+          <div className="grid gap-5">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-surface rounded-2xl p-6 md:p-8 border border-white/5 animate-pulse">
+                <div className="flex gap-3 mb-3">
+                  <div className="h-5 w-16 bg-white/5 rounded" />
+                  <div className="h-5 w-24 bg-white/5 rounded" />
+                </div>
+                <div className="h-7 w-3/4 bg-white/5 rounded mb-3" />
+                <div className="flex gap-2 mb-4">
+                  <div className="h-5 w-14 bg-white/5 rounded-full" />
+                  <div className="h-5 w-14 bg-white/5 rounded-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 列表加载失败
+  if (listError) {
+    return (
+      <div className="min-h-screen pt-24 pb-20">
+        <div className="max-w-5xl w-full mx-auto px-4 text-center py-20">
+          <BookOpen size={48} className="mx-auto mb-4 text-gray-500 opacity-30" />
+          <p className="text-gray-400 mb-2">
+            {isZh ? '文章列表加载失败' : 'Failed to load articles'}
+          </p>
+          <p className="text-sm text-gray-600">{listError}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen pt-24 pb-20">
       <div className="max-w-5xl w-full mx-auto px-4">
