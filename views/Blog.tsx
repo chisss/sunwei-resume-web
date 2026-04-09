@@ -7,13 +7,18 @@ import rehypeRaw from 'rehype-raw';
 import { ResumeData } from '../types';
 import {
   BookOpen, Calendar, Clock, ArrowRight, ArrowLeft,
-  FolderOpen, Tag, Loader2
+  FolderOpen, Tag
 } from 'lucide-react';
 import { useBlogList, useBlogArticle } from '../hooks/useBlog';
 
 interface BlogProps {
   data: ResumeData;
 }
+
+// 骨架屏组件
+const SkeletonBlock = ({ className }: { className?: string }) => (
+  <div className={`rounded-lg shimmer ${className}`} />
+);
 
 const Blog: React.FC<BlogProps> = ({ data }) => {
   const isZh = data.blog.title.includes('技术') || data.blog.title.includes('洞见');
@@ -23,25 +28,20 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
   const currentCategory = searchParams.get('category') || 'all';
   const currentTag = searchParams.get('tag') || '';
 
-  // 获取文章列表
   const { articles: blogArticles, loading: listLoading, error: listError } = useBlogList();
 
-  // 根据 slug 找到文章元信息（含 path）
   const currentArticleMeta = useMemo(() => {
     if (!currentSlug) return null;
     return blogArticles.find(a => a.slug === currentSlug) || null;
   }, [currentSlug, blogArticles]);
 
-  // 按需加载文章内容
   const { article: currentArticle, loading: articleLoading, error: articleError } =
     useBlogArticle(currentArticleMeta?.path || null);
 
-  // Scroll to top when switching between list and detail view
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentSlug]);
 
-  // Extract unique categories and tags
   const categories = useMemo(() => {
     const cats = new Set<string>();
     blogArticles.forEach(a => cats.add(a.category));
@@ -60,7 +60,6 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
       .map(([tag, count]) => ({ tag, count }));
   }, [blogArticles]);
 
-  // Filter articles
   const filteredArticles = useMemo(() => {
     return blogArticles.filter(a => {
       if (currentCategory !== 'all' && a.category !== currentCategory) return false;
@@ -79,11 +78,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
   const handleTagClick = (tag: string) => {
     const params = new URLSearchParams();
     if (currentCategory !== 'all') params.set('category', currentCategory);
-    if (tag === currentTag) {
-      // Toggle off
-    } else {
-      params.set('tag', tag);
-    }
+    if (tag !== currentTag) params.set('tag', tag);
     setSearchParams(params);
   };
 
@@ -98,136 +93,187 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
     setSearchParams(params);
   };
 
-  // ========= Article Detail View =========
-  if (currentSlug) {
-    // 加载中
-    if (articleLoading || (!currentArticle && !articleError)) {
-      return (
-        <div className="min-h-screen pt-24 pb-20">
-          <div className="max-w-4xl w-full mx-auto px-4">
-            <div className="animate-pulse">
-              <div className="h-4 w-32 bg-white/5 rounded mb-8" />
-              <div className="h-8 w-3/4 bg-white/5 rounded mb-4" />
-              <div className="h-4 w-1/2 bg-white/5 rounded mb-8" />
-              <div className="space-y-3">
-                {Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className="h-4 bg-white/5 rounded" style={{ width: `${70 + Math.random() * 30}%` }} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // 加载失败
-    if (articleError || !currentArticle) {
-      return (
-        <div className="min-h-screen pt-24 pb-20">
-          <div className="max-w-4xl w-full mx-auto px-4 text-center py-20">
-            <BookOpen size={48} className="mx-auto mb-4 text-gray-500 opacity-30" />
-            <p className="text-gray-400 mb-4">
-              {isZh ? '文章加载失败' : 'Failed to load article'}
-            </p>
-            <p className="text-sm text-gray-600 mb-6">{articleError}</p>
-            <button
-              onClick={handleBackToList}
-              className="px-4 py-2 rounded-lg bg-white/5 text-gray-300 hover:bg-white/10 transition-colors"
-            >
-              {isZh ? '返回文章列表' : 'Back to articles'}
-            </button>
-          </div>
-        </div>
-      );
-    }
-
+  // ========= 文章详情：加载中 =========
+  if (currentSlug && (articleLoading || (!currentArticle && !articleError))) {
     return (
-      <div className="min-h-screen pt-24 pb-20">
-        <div className="max-w-4xl w-full mx-auto px-4">
-          {/* Back button */}
-          <motion.button
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
+      <div className="min-h-screen bg-background pt-[52px] pb-32">
+        <div className="max-w-3xl mx-auto px-5 sm:px-8 pt-16">
+          <SkeletonBlock className="h-4 w-28 mb-10" />
+          <SkeletonBlock className="h-10 w-4/5 mb-5" />
+          <SkeletonBlock className="h-4 w-1/3 mb-10" />
+          <div className="space-y-3">
+            {Array.from({ length: 14 }).map((_, i) => (
+              <SkeletonBlock
+                key={i}
+                className="h-4"
+                style={{ width: `${65 + Math.random() * 35}%` } as React.CSSProperties}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ========= 文章详情：加载失败 =========
+  if (currentSlug && (articleError || !currentArticle)) {
+    return (
+      <div className="min-h-screen bg-background pt-[52px] pb-32 flex items-center justify-center">
+        <div className="text-center px-5">
+          <div className="w-16 h-16 rounded-3xl bg-white/[0.04] border border-white/[0.07] flex items-center justify-center mx-auto mb-6">
+            <BookOpen size={28} className="text-white/20" strokeWidth={1.5} />
+          </div>
+          <h3 className="text-[17px] font-semibold text-white/60 mb-2">
+            {isZh ? '文章加载失败' : 'Failed to load article'}
+          </h3>
+          <p className="text-[13px] text-white/30 mb-8">{articleError}</p>
+          <button
             onClick={handleBackToList}
-            className="flex items-center gap-2 text-gray-400 hover:text-secondary transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-medium
+              bg-white/[0.06] hover:bg-white/[0.1] text-white/60 hover:text-white/90
+              border border-white/[0.08] hover:border-white/[0.15]
+              transition-all duration-200"
           >
-            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">{isZh ? '返回文章列表' : 'Back to articles'}</span>
+            <ArrowLeft size={14} strokeWidth={2} />
+            {isZh ? '返回文章列表' : 'Back to articles'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ========= 文章详情视图 =========
+  if (currentSlug && currentArticle) {
+    return (
+      <div className="min-h-screen bg-background pt-[52px] pb-32 overflow-x-hidden">
+        {/* 背景光晕 */}
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-secondary/[0.04] rounded-full blur-[100px]" />
+        </div>
+
+        <div className="relative max-w-3xl mx-auto px-5 sm:px-8 pt-16">
+          {/* 返回按钮 */}
+          <motion.button
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            onClick={handleBackToList}
+            className="group flex items-center gap-2 mb-10
+              text-[13px] font-medium text-white/40 hover:text-white/80
+              transition-colors duration-200"
+          >
+            <ArrowLeft
+              size={16}
+              strokeWidth={1.5}
+              className="group-hover:-translate-x-1 transition-transform duration-200"
+            />
+            {isZh ? '返回文章列表' : 'Back to articles'}
           </motion.button>
 
-          {/* Article header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          {/* 文章头部 */}
+          <motion.header
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-10"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-12"
           >
-            <div className="flex items-center gap-2 text-xs text-secondary mb-3">
-              <FolderOpen size={14} />
-              <span>{currentArticle.category}</span>
+            {/* 分类标签 */}
+            <div className="flex items-center gap-2 text-[12px] text-secondary/70 mb-4">
+              <FolderOpen size={13} strokeWidth={1.5} />
+              <span className="font-medium">{currentArticle.category}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+
+            {/* 文章标题 */}
+            <h1 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold text-white tracking-tight leading-[1.15] mb-6">
               {currentArticle.title}
             </h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+
+            {/* 元信息 */}
+            <div className="flex flex-wrap items-center gap-4 text-[12px] text-white/30 mb-5">
               <div className="flex items-center gap-1.5">
-                <Calendar size={14} />
+                <Calendar size={13} strokeWidth={1.5} />
                 <span>{currentArticle.created}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Clock size={14} />
+                <Clock size={13} strokeWidth={1.5} />
                 <span>{currentArticle.readTime}</span>
               </div>
             </div>
-            <div className="flex flex-wrap gap-2 mt-4">
+
+            {/* 标签 */}
+            <div className="flex flex-wrap gap-2">
               {currentArticle.tags.map(tag => (
                 <span
                   key={tag}
-                  className="px-2.5 py-1 rounded-full text-xs bg-secondary/10 text-secondary border border-secondary/20"
+                  className="px-2.5 py-1 rounded-full text-[11px] font-medium
+                    bg-secondary/[0.08] text-secondary/70 border border-secondary/[0.15]"
                 >
                   #{tag}
                 </span>
               ))}
             </div>
-          </motion.div>
 
-          {/* Article content */}
+            {/* 分割线 */}
+            <div className="mt-8 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+          </motion.header>
+
+          {/* 文章正文 */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
             className="prose prose-invert prose-lg max-w-none
-              prose-headings:text-white prose-headings:font-bold
-              prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-10
-              prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8 prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/10
-              prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6
-              prose-h4:text-lg prose-h4:mb-2 prose-h4:mt-4
-              prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-4
-              prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-white prose-strong:font-semibold
-              prose-code:text-secondary prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
-              prose-pre:bg-surface prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-pre:shadow-lg
-              prose-blockquote:border-l-secondary prose-blockquote:bg-white/5 prose-blockquote:rounded-r-lg prose-blockquote:py-1 prose-blockquote:px-4
-              prose-li:text-gray-300 prose-li:marker:text-secondary
-              prose-table:border-collapse
-              prose-th:bg-white/5 prose-th:text-white prose-th:px-4 prose-th:py-2 prose-th:text-left prose-th:border prose-th:border-white/10
-              prose-td:px-4 prose-td:py-2 prose-td:border prose-td:border-white/10 prose-td:text-gray-300
-              prose-hr:border-white/10
-              prose-img:rounded-xl prose-img:shadow-lg
+              prose-headings:font-bold prose-headings:tracking-tight
+              prose-h1:text-[clamp(1.5rem,3vw,2rem)] prose-h1:text-white prose-h1:mt-12 prose-h1:mb-5
+              prose-h2:text-[clamp(1.25rem,2.5vw,1.625rem)] prose-h2:text-white/90 prose-h2:mt-10 prose-h2:mb-4
+                prose-h2:pb-2 prose-h2:border-b prose-h2:border-white/[0.08]
+              prose-h3:text-[clamp(1rem,2vw,1.25rem)] prose-h3:text-white/80 prose-h3:mt-8 prose-h3:mb-3
+              prose-h4:text-white/70 prose-h4:mt-6 prose-h4:mb-2
+              prose-p:text-white/50 prose-p:leading-[1.8] prose-p:mb-5 prose-p:text-[15px]
+              prose-a:text-secondary/80 prose-a:no-underline prose-a:font-medium
+                hover:prose-a:text-secondary hover:prose-a:underline
+              prose-strong:text-white/80 prose-strong:font-semibold
+              prose-em:text-white/50
+              prose-code:text-secondary/80 prose-code:bg-white/[0.06] prose-code:border prose-code:border-white/[0.08]
+                prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-[13px]
+                prose-code:before:content-none prose-code:after:content-none
+              prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-white/[0.08]
+                prose-pre:rounded-2xl prose-pre:shadow-[0_8px_32px_rgba(0,0,0,0.4)]
+                prose-pre:text-[13px]
+              prose-blockquote:border-l-2 prose-blockquote:border-secondary/40
+                prose-blockquote:bg-white/[0.02] prose-blockquote:rounded-r-xl
+                prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:my-6
+                prose-blockquote:text-white/40 prose-blockquote:not-italic
+              prose-li:text-white/50 prose-li:text-[15px] prose-li:leading-[1.7]
+              prose-li:marker:text-secondary/50
+              prose-ul:my-4 prose-ol:my-4
+              prose-table:border-collapse prose-table:w-full
+              prose-th:bg-white/[0.04] prose-th:text-white/70 prose-th:font-semibold
+                prose-th:px-4 prose-th:py-2.5 prose-th:text-left
+                prose-th:border prose-th:border-white/[0.08] prose-th:text-[13px]
+              prose-td:px-4 prose-td:py-2.5 prose-td:border prose-td:border-white/[0.06]
+                prose-td:text-white/45 prose-td:text-[13px]
+              prose-hr:border-white/[0.08] prose-hr:my-8
+              prose-img:rounded-2xl prose-img:shadow-[0_8px_32px_rgba(0,0,0,0.3)]
             "
           >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
               components={{
-                // Skip the first h1 (title) since we render it above
+                // 跳过文章正文中与标题重复的 h1
                 h1: ({ children }) => {
                   const text = String(children);
-                  if (text.replace(/[^\w\u4e00-\u9fa5]/g, '').includes(currentArticle.title.replace(/[^\w\u4e00-\u9fa5]/g, '').slice(0, 10))) {
+                  if (
+                    text
+                      .replace(/[^\w\u4e00-\u9fa5]/g, '')
+                      .includes(currentArticle.title.replace(/[^\w\u4e00-\u9fa5]/g, '').slice(0, 10))
+                  ) {
                     return null;
                   }
                   return <h1>{children}</h1>;
                 },
-                // Open external links in new tab
+                // 外部链接新标签打开
                 a: ({ href, children, ...props }) => (
                   <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
                     {children}
@@ -243,33 +289,29 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
     );
   }
 
-  // ========= Article List View =========
-
-  // 列表加载中
+  // ========= 文章列表：加载中 =========
   if (listLoading) {
     return (
-      <div className="min-h-screen pt-24 pb-20">
-        <div className="max-w-5xl w-full mx-auto px-4">
-          {/* Header skeleton */}
-          <div className="text-center mb-12 animate-pulse">
-            <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6">
-              <Loader2 size={32} className="text-secondary animate-spin" />
-            </div>
-            <div className="h-10 w-64 bg-white/5 rounded mx-auto mb-4" />
-            <div className="h-5 w-48 bg-white/5 rounded mx-auto" />
+      <div className="min-h-screen bg-background pt-[52px] pb-32">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 pt-16">
+          {/* 标题骨架 */}
+          <div className="text-center mb-14">
+            <div className="w-16 h-16 rounded-3xl shimmer mx-auto mb-6" />
+            <SkeletonBlock className="h-10 w-56 mx-auto mb-4" />
+            <SkeletonBlock className="h-5 w-40 mx-auto" />
           </div>
-          {/* Card skeletons */}
-          <div className="grid gap-5">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="bg-surface rounded-2xl p-6 md:p-8 border border-white/5 animate-pulse">
+          {/* 卡片骨架 */}
+          <div className="space-y-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="rounded-[20px] p-7 border border-white/[0.05] bg-surface">
                 <div className="flex gap-3 mb-3">
-                  <div className="h-5 w-16 bg-white/5 rounded" />
-                  <div className="h-5 w-24 bg-white/5 rounded" />
+                  <SkeletonBlock className="h-5 w-16" />
+                  <SkeletonBlock className="h-5 w-24" />
                 </div>
-                <div className="h-7 w-3/4 bg-white/5 rounded mb-3" />
-                <div className="flex gap-2 mb-4">
-                  <div className="h-5 w-14 bg-white/5 rounded-full" />
-                  <div className="h-5 w-14 bg-white/5 rounded-full" />
+                <SkeletonBlock className="h-7 w-3/4 mb-4" />
+                <div className="flex gap-2">
+                  <SkeletonBlock className="h-5 w-14 rounded-full" />
+                  <SkeletonBlock className="h-5 w-14 rounded-full" />
                 </div>
               </div>
             ))}
@@ -279,101 +321,114 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
     );
   }
 
-  // 列表加载失败
+  // ========= 文章列表：加载失败 =========
   if (listError) {
     return (
-      <div className="min-h-screen pt-24 pb-20">
-        <div className="max-w-5xl w-full mx-auto px-4 text-center py-20">
-          <BookOpen size={48} className="mx-auto mb-4 text-gray-500 opacity-30" />
-          <p className="text-gray-400 mb-2">
+      <div className="min-h-screen bg-background pt-[52px] flex items-center justify-center">
+        <div className="text-center px-5">
+          <div className="w-16 h-16 rounded-3xl bg-white/[0.04] border border-white/[0.07] flex items-center justify-center mx-auto mb-6">
+            <BookOpen size={28} className="text-white/20" strokeWidth={1.5} />
+          </div>
+          <h3 className="text-[17px] font-semibold text-white/60 mb-2">
             {isZh ? '文章列表加载失败' : 'Failed to load articles'}
-          </p>
-          <p className="text-sm text-gray-600">{listError}</p>
+          </h3>
+          <p className="text-[13px] text-white/30">{listError}</p>
         </div>
       </div>
     );
   }
 
+  // ========= 文章列表视图 =========
   return (
-    <div className="min-h-screen pt-24 pb-20">
-      <div className="max-w-5xl w-full mx-auto px-4">
-        {/* Header */}
+    <div className="min-h-screen bg-background pt-[52px] pb-32 overflow-x-hidden">
+      {/* 背景光晕 */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-secondary/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 -left-32 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px]" />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-5 sm:px-8 pt-16">
+        {/* 页面标题 */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-14"
         >
-          <div className="inline-flex items-center justify-center p-3 bg-white/5 rounded-2xl mb-6 shadow-lg shadow-purple-500/10">
-            <BookOpen size={32} className="text-secondary" />
+          {/* 图标 */}
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-3xl
+            bg-secondary/[0.08] border border-secondary/[0.15] mb-7
+            shadow-[0_0_32px_rgba(191,90,242,0.15)]">
+            <BookOpen size={24} className="text-secondary/80" strokeWidth={1.5} />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {data.blog.title}
-          </h2>
-          <p className="text-lg text-gray-400">{data.blog.subtitle}</p>
-          <p className="text-sm text-gray-500 mt-2">
+
+          <span className="text-label mb-3 block">
+            {isZh ? '技术分享' : 'Tech Insights'}
+          </span>
+          <h1 className="heading-section text-white mb-3">{data.blog.title}</h1>
+          <p className="text-[15px] text-white/40 mb-2">{data.blog.subtitle}</p>
+          <p className="text-[13px] text-white/25">
             {isZh ? `${blogArticles.length} 篇文章` : `${blogArticles.length} articles`}
           </p>
+          <div className="section-divider mt-6" />
         </motion.div>
 
-        {/* Category tabs */}
+        {/* 分类 Tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex flex-wrap items-center gap-2 mb-6"
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="flex flex-wrap items-center gap-2 mb-5"
         >
-          <FolderOpen size={16} className="text-gray-500 mr-1" />
-          <button
-            onClick={() => handleCategoryClick('all')}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              currentCategory === 'all'
-                ? 'bg-secondary text-white shadow-lg shadow-secondary/20'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-            }`}
+          <div className="flex items-center gap-1.5 text-white/25 mr-1">
+            <FolderOpen size={14} strokeWidth={1.5} />
+          </div>
+
+          {[{ key: 'all', label: isZh ? '全部' : 'All' }, ...categories.map(c => ({ key: c, label: c }))].map(({ key, label }) => (
+            <button
+              key={key}
+              onClick={() => handleCategoryClick(key)}
+              className={`px-3.5 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 ${
+                currentCategory === key
+                  ? 'bg-secondary/[0.15] text-secondary border border-secondary/[0.3] shadow-[0_0_16px_rgba(191,90,242,0.15)]'
+                  : 'bg-white/[0.04] text-white/40 hover:bg-white/[0.08] hover:text-white/70 border border-white/[0.06] hover:border-white/[0.12]'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* 标签筛选 */}
+        {allTags.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="flex flex-wrap items-center gap-2 mb-10"
           >
-            {isZh ? '全部' : 'All'}
-          </button>
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => handleCategoryClick(cat)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                currentCategory === cat
-                  ? 'bg-secondary text-white shadow-lg shadow-secondary/20'
-                  : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </motion.div>
+            <div className="flex items-center gap-1.5 text-white/20 mr-1">
+              <Tag size={13} strokeWidth={1.5} />
+            </div>
+            {allTags.map(({ tag, count }) => (
+              <button
+                key={tag}
+                onClick={() => handleTagClick(tag)}
+                className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 ${
+                  currentTag === tag
+                    ? 'bg-secondary/[0.12] text-secondary/80 border border-secondary/[0.25]'
+                    : 'bg-white/[0.03] text-white/30 hover:text-white/55 border border-transparent hover:border-white/[0.08]'
+                }`}
+              >
+                #{tag}
+                <span className="ml-1 opacity-40 text-[10px]">{count}</span>
+              </button>
+            ))}
+          </motion.div>
+        )}
 
-        {/* Tag filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="flex flex-wrap items-center gap-2 mb-10"
-        >
-          <Tag size={14} className="text-gray-500 mr-1" />
-          {allTags.map(({ tag, count }) => (
-            <button
-              key={tag}
-              onClick={() => handleTagClick(tag)}
-              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all ${
-                currentTag === tag
-                  ? 'bg-secondary/20 text-secondary border border-secondary/40'
-                  : 'bg-white/5 text-gray-500 hover:text-gray-300 border border-transparent hover:border-white/10'
-              }`}
-            >
-              #{tag}
-              <span className="ml-1 opacity-50">{count}</span>
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Article list */}
-        <div className="grid gap-5">
+        {/* 文章列表 */}
+        <div className="space-y-4">
           <AnimatePresence mode="popLayout">
             {filteredArticles.map((article, index) => (
               <motion.div
@@ -381,64 +436,88 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ delay: index * 0.05 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{
+                  delay: index * 0.04,
+                  duration: 0.5,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
                 onClick={() => handleArticleClick(article.slug)}
-                className="group relative bg-surface rounded-2xl p-6 md:p-8 border border-white/5 hover:border-secondary/30 transition-all duration-300 hover:shadow-xl hover:shadow-secondary/5 cursor-pointer overflow-hidden"
+                className="group relative rounded-[20px] p-6 md:p-7
+                  bg-surface border border-white/[0.07]
+                  hover:border-white/[0.13] hover:bg-[#0f0f0f]
+                  transition-all duration-350
+                  hover:shadow-[0_16px_48px_rgba(0,0,0,0.45)]
+                  cursor-pointer overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl group-hover:bg-secondary/10 transition-colors"></div>
+                {/* hover 装饰光 */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/[0.04] rounded-full blur-2xl
+                  group-hover:bg-secondary/[0.08] transition-colors duration-400 pointer-events-none" />
+                {/* 顶部高光线 */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                 <div className="relative z-10">
-                  {/* Category & Meta */}
-                  <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-gray-500 mb-3">
-                    <span className="px-2 py-0.5 rounded bg-white/5 text-secondary/80 border border-white/5">
+                  {/* 分类 + 元信息 */}
+                  <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-white/30 mb-3">
+                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-secondary/60">
                       {article.category}
                     </span>
                     <div className="flex items-center gap-1.5">
-                      <Calendar size={13} />
+                      <Calendar size={12} strokeWidth={1.5} />
                       <span>{article.created}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Clock size={13} />
+                      <Clock size={12} strokeWidth={1.5} />
                       <span>{article.readTime}</span>
                     </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-secondary transition-colors">
+                  {/* 文章标题 */}
+                  <h2 className="text-[clamp(1rem,2vw,1.25rem)] font-bold text-white/80 mb-4 leading-snug
+                    group-hover:text-white transition-colors duration-200 tracking-tight">
                     {article.title}
-                  </h3>
+                  </h2>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  {/* 标签 */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
                     {article.tags.map(tag => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded-full text-xs bg-white/5 text-gray-400 border border-white/5"
+                        className="px-2 py-0.5 rounded-md text-[11px] bg-white/[0.03] text-white/25 border border-white/[0.05]"
                       >
                         #{tag}
                       </span>
                     ))}
                   </div>
 
-                  {/* Read more */}
-                  <div className="flex items-center gap-2 text-sm font-medium text-gray-500 group-hover:text-secondary transition-colors">
+                  {/* 阅读更多 */}
+                  <div className="flex items-center gap-1.5 text-[12px] font-medium text-white/25 group-hover:text-secondary/70 transition-colors duration-200">
                     {isZh ? '阅读全文' : 'Read more'}
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      size={13}
+                      strokeWidth={2}
+                      className="group-hover:translate-x-1 transition-transform duration-200"
+                    />
                   </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
 
+          {/* 空状态 */}
           {filteredArticles.length === 0 && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20 text-gray-500"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-24"
             >
-              <BookOpen size={48} className="mx-auto mb-4 opacity-30" />
-              <p>{isZh ? '暂无符合条件的文章' : 'No matching articles found'}</p>
+              <div className="w-16 h-16 rounded-3xl bg-white/[0.04] border border-white/[0.06]
+                flex items-center justify-center mx-auto mb-5">
+                <BookOpen size={24} className="text-white/20" strokeWidth={1.5} />
+              </div>
+              <p className="text-[14px] text-white/30">
+                {isZh ? '暂无符合条件的文章' : 'No matching articles found'}
+              </p>
             </motion.div>
           )}
         </div>

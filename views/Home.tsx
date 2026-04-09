@@ -25,209 +25,311 @@ const JOB_TARGET_EN = {
   availability: 'Employed, available to start quickly',
 };
 
+// 动画配置
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 }
+  }
+};
+
+const itemUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
 const Home: React.FC<HomeProps> = ({ data }) => {
   const isZh = data.hero.name === '孙伟';
   const jobTarget = isZh ? JOB_TARGET_ZH : JOB_TARGET_EN;
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
-  // summary 图标列表 (6个)
   const summaryIcons = [Award, Briefcase, Target, GraduationCap, Award, Target];
 
   return (
-    <div className="min-h-screen pt-24 md:pt-32 pb-20 overflow-hidden bg-background">
-      {/* Hero Section */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Background Effects */}
-        <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] -z-10 opacity-60 animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] -z-10 opacity-50"></div>
+    <div className="min-h-screen bg-background overflow-x-hidden">
 
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-20"
-        >
-          {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left">
-            <motion.div variants={item} className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium tracking-wide">
-               <Briefcase size={14} />
-               {data.hero.details.exp}
-            </motion.div>
+      {/* ========= Hero Section ========= */}
+      <section className="relative min-h-[100svh] flex items-center pt-16 pb-24 overflow-hidden">
+        {/* 背景装饰光晕 */}
+        <div
+          className="absolute bg-orb w-[700px] h-[700px] bg-primary/[0.07] -top-40 -right-40"
+          style={{ animationDelay: '0s' }}
+        />
+        <div
+          className="absolute bg-orb w-[500px] h-[500px] bg-secondary/[0.06] bottom-0 -left-32"
+          style={{ animationDelay: '3s' }}
+        />
+        <div
+          className="absolute bg-orb w-[300px] h-[300px] bg-accent/[0.04] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{ animationDelay: '6s' }}
+        />
 
-            <motion.h1 variants={item} className="text-5xl md:text-7xl font-bold tracking-tight mb-4 text-white">
-              {data.hero.name}
-            </motion.h1>
+        {/* 细微网格背景 */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+            backgroundSize: '80px 80px'
+          }}
+        />
 
-            <motion.h2 variants={item} className="text-2xl md:text-3xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-gray-400 to-gray-500 mb-6">
-              {data.hero.title}
-            </motion.h2>
-
-            {/* Tagline as Tags - 统一颜色 */}
-            <motion.div variants={item} className="flex flex-wrap justify-center lg:justify-start gap-2 mb-8">
-              {data.hero.tagline.split(' · ').map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 rounded-full text-sm font-medium border bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 transition-colors"
-                >
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
-
-            {/* Personal Details Chips */}
-            <motion.div variants={item} className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
-               <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-300">
-                  <GraduationCap size={16} className="text-accent" /> {data.hero.details.education}
-               </div>
-               <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-300">
-                  <MapPin size={16} className="text-secondary" /> {data.hero.contact.location}
-               </div>
-            </motion.div>
-
-            <motion.div variants={item} className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 text-sm mb-12">
-              <a href={`mailto:${data.hero.contact.email}`} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                <Mail size={18} className="text-primary" /> {data.hero.contact.email}
-              </a>
-              <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                <Phone size={18} className="text-secondary" /> {data.hero.contact.phone}
-              </div>
-              {data.hero.contact.wechat && (
-                <div className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                  <MessageCircle size={18} className="text-accent" /> {data.hero.contact.wechat}
-                </div>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Avatar Section */}
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 w-full">
           <motion.div
-            variants={item}
-            className="relative flex-shrink-0"
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24"
           >
-            <div className="relative w-64 h-64 md:w-80 md:h-80 group">
-              {/* Spinning Glow Ring */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary via-secondary to-accent opacity-30 blur-2xl animate-pulse group-hover:opacity-50 transition-opacity duration-500"></div>
+            {/* 文字内容区 */}
+            <div className="flex-1 text-center lg:text-left">
+              {/* 经验标签 */}
+              <motion.div variants={itemUp}>
+                <span className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full
+                  bg-primary/[0.08] border border-primary/[0.15]
+                  text-primary text-[13px] font-medium tracking-wide">
+                  <Briefcase size={13} strokeWidth={2} />
+                  {data.hero.details.exp}
+                </span>
+              </motion.div>
 
-              {/* Image Container */}
-              <div className="relative w-full h-full rounded-full p-1 bg-gradient-to-tr from-white/10 to-transparent">
-                <div className="w-full h-full rounded-full overflow-hidden bg-surface border-4 border-surface shadow-2xl">
-                   <img
-                    src={data.hero.avatar}
-                    alt={data.hero.name}
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-white/5 text-gray-500"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>';
-                    }}
-                   />
+              {/* 姓名 */}
+              <motion.h1
+                variants={itemUp}
+                className="text-[clamp(3.5rem,10vw,7rem)] font-bold tracking-[-0.04em] leading-[0.95] mb-5 text-white"
+              >
+                {data.hero.name}
+              </motion.h1>
+
+              {/* 职位标题 */}
+              <motion.h2
+                variants={itemUp}
+                className="text-[clamp(1.25rem,3vw,1.75rem)] font-medium tracking-tight mb-7
+                  text-transparent bg-clip-text bg-gradient-to-r from-white/80 via-white/50 to-white/30"
+              >
+                {data.hero.title}
+              </motion.h2>
+
+              {/* 标签列表 */}
+              <motion.div
+                variants={itemUp}
+                className="flex flex-wrap justify-center lg:justify-start gap-2 mb-8"
+              >
+                {data.hero.tagline.split(' · ').map((tag, idx) => (
+                  <span key={idx} className="tag-pill">
+                    {tag}
+                  </span>
+                ))}
+              </motion.div>
+
+              {/* 基本信息 */}
+              <motion.div
+                variants={itemUp}
+                className="flex flex-wrap justify-center lg:justify-start gap-3 mb-8"
+              >
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl
+                  bg-white/[0.04] border border-white/[0.08] text-[13px] text-white/60">
+                  <GraduationCap size={15} className="text-accent/80" strokeWidth={1.5} />
+                  {data.hero.details.education}
                 </div>
-              </div>
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl
+                  bg-white/[0.04] border border-white/[0.08] text-[13px] text-white/60">
+                  <MapPin size={15} className="text-secondary/80" strokeWidth={1.5} />
+                  {data.hero.contact.location}
+                </div>
+              </motion.div>
+
+              {/* 联系方式 */}
+              <motion.div
+                variants={itemUp}
+                className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 mb-10"
+              >
+                <a
+                  href={`mailto:${data.hero.contact.email}`}
+                  className="flex items-center gap-2 text-[13px] text-white/40 hover:text-white/80 transition-colors duration-200"
+                >
+                  <Mail size={15} className="text-primary/70" strokeWidth={1.5} />
+                  {data.hero.contact.email}
+                </a>
+                <div className="flex items-center gap-2 text-[13px] text-white/40 hover:text-white/80 transition-colors duration-200 cursor-default">
+                  <Phone size={15} className="text-secondary/70" strokeWidth={1.5} />
+                  {data.hero.contact.phone}
+                </div>
+                {data.hero.contact.wechat && (
+                  <div className="flex items-center gap-2 text-[13px] text-white/40 hover:text-white/80 transition-colors duration-200 cursor-default">
+                    <MessageCircle size={15} className="text-accent/70" strokeWidth={1.5} />
+                    {data.hero.contact.wechat}
+                  </div>
+                )}
+              </motion.div>
             </div>
+
+            {/* 头像区域 */}
+            <motion.div
+              variants={itemUp}
+              className="relative flex-shrink-0"
+            >
+              <div className="relative w-60 h-60 md:w-72 md:h-72 lg:w-80 lg:h-80">
+                {/* 外层光晕环 */}
+                <div className="absolute inset-[-20px] rounded-full bg-gradient-to-tr from-primary/20 via-secondary/10 to-transparent blur-2xl animate-pulse-slow" />
+
+                {/* 旋转渐变边框 */}
+                <div className="absolute inset-0 rounded-full p-[1.5px] bg-gradient-to-br from-white/20 via-white/5 to-white/20">
+                  {/* 头像容器 */}
+                  <div className="w-full h-full rounded-full overflow-hidden bg-surface group relative">
+                    <img
+                      src={data.hero.avatar}
+                      alt={data.hero.name}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        const el = e.target as HTMLImageElement;
+                        el.style.display = 'none';
+                        el.parentElement!.innerHTML = `
+                          <div class="w-full h-full flex items-center justify-center bg-white/5 text-white/20">
+                            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                              <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                          </div>`;
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* 浮动装饰点 */}
+                <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-accent/60 blur-[2px] animate-pulse" />
+                <div className="absolute -bottom-3 -left-2 w-3 h-3 rounded-full bg-primary/50 blur-[2px] animate-pulse" style={{ animationDelay: '1s' }} />
+              </div>
+            </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ========= Summary Cards Section ========= */}
+      <section className="py-24 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        {/* 节标题 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-16"
+        >
+          <span className="text-label mb-4 block">{isZh ? '关于我' : 'About Me'}</span>
+          <h2 className="heading-section text-white mb-3">
+            {isZh ? '核心优势' : 'Core Strengths'}
+          </h2>
+          <div className="section-divider mt-5" />
         </motion.div>
 
-        {/* Summary Grid - 6 blocks */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {data.hero.summary.map((point, index) => {
             const IconComp = summaryIcons[index] || Award;
             return (
               <motion.div
                 key={index}
-                variants={item}
-                className="p-6 rounded-2xl bg-surface/50 border border-white/5 hover:bg-white/5 transition-all duration-300 hover:border-white/10"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: index * 0.07,
+                  duration: 0.6,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                className="card-base p-7 group"
               >
-                <IconComp className="mb-4 text-primary w-6 h-6" />
-                <p className="text-gray-300 leading-relaxed text-base font-light">{point}</p>
+                {/* 图标 */}
+                <div className="mb-5 w-10 h-10 rounded-2xl bg-primary/[0.08] border border-primary/[0.12]
+                  flex items-center justify-center group-hover:bg-primary/[0.15] transition-colors duration-300">
+                  <IconComp className="text-primary/70 group-hover:text-primary transition-colors duration-300" size={18} strokeWidth={1.5} />
+                </div>
+                {/* 内容 */}
+                <p className="text-white/50 leading-relaxed text-[14px] group-hover:text-white/70 transition-colors duration-300">
+                  {point}
+                </p>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </section>
 
-      {/* Job Target Section */}
-      <section className="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========= Job Target Section ========= */}
+      <section className="pb-24 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/10 via-surface to-secondary/10 border border-white/10 p-8 md:p-12"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="relative overflow-hidden rounded-[28px] p-8 md:p-12 border border-white/[0.07]"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0,113,227,0.06) 0%, rgba(10,10,10,1) 50%, rgba(191,90,242,0.06) 100%)'
+          }}
         >
-          {/* Background decoration */}
-          <div className="absolute right-0 top-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          {/* 背景装饰 */}
+          <div className="absolute right-0 top-0 w-72 h-72 bg-primary/[0.04] rounded-full blur-3xl -translate-y-1/3 translate-x-1/3 pointer-events-none" />
+          <div className="absolute left-0 bottom-0 w-56 h-56 bg-secondary/[0.04] rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
           <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-2.5 rounded-xl bg-primary/20 border border-primary/20">
-                <Target size={22} className="text-primary" />
+            {/* 标题 */}
+            <div className="flex items-center gap-3 mb-10">
+              <div className="p-2.5 rounded-2xl bg-primary/[0.1] border border-primary/[0.15]">
+                <Target size={20} className="text-primary" strokeWidth={1.5} />
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">{jobTarget.title}</h2>
+              <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-bold text-white tracking-tight">
+                {jobTarget.title}
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* 目标岗位 */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">{isZh ? '目标岗位' : 'Target Roles'}</h4>
-                <div className="space-y-2">
+              <div className="space-y-4">
+                <p className="text-label">{isZh ? '目标岗位' : 'Target Roles'}</p>
+                <div className="space-y-2.5">
                   {jobTarget.positions.map((pos, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <ArrowRight size={14} className="text-primary flex-shrink-0" />
-                      <span className="text-white text-sm">{pos}</span>
+                    <div key={i} className="flex items-start gap-2.5">
+                      <ArrowRight size={13} className="text-primary/60 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                      <span className="text-white/70 text-[13px] leading-snug">{pos}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* 目标行业 */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">{isZh ? '目标行业' : 'Industries'}</h4>
-                <div className="space-y-2">
+              <div className="space-y-4">
+                <p className="text-label">{isZh ? '目标行业' : 'Industries'}</p>
+                <div className="space-y-2.5">
                   {jobTarget.industries.map((ind, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <ArrowRight size={14} className="text-secondary flex-shrink-0" />
-                      <span className="text-white text-sm">{ind}</span>
+                    <div key={i} className="flex items-start gap-2.5">
+                      <ArrowRight size={13} className="text-secondary/60 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                      <span className="text-white/70 text-[13px] leading-snug">{ind}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* 期望薪资 */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">{isZh ? '期望薪资' : 'Expected Salary'}</h4>
+              <div className="space-y-4">
+                <p className="text-label">{isZh ? '期望薪资' : 'Expected Salary'}</p>
                 <div className="flex items-center gap-3">
-                  <Banknote size={20} className="text-accent" />
-                  <span className="text-2xl font-bold text-white">{jobTarget.salary}</span>
+                  <div className="p-2 rounded-xl bg-accent/[0.08] border border-accent/[0.12]">
+                    <Banknote size={18} className="text-accent/70" strokeWidth={1.5} />
+                  </div>
+                  <span className="text-[1.75rem] font-bold text-white tracking-tight">{jobTarget.salary}</span>
                 </div>
               </div>
 
               {/* 到岗状态 */}
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">{isZh ? '到岗状态' : 'Availability'}</h4>
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              <div className="space-y-4">
+                <p className="text-label">{isZh ? '到岗状态' : 'Availability'}</p>
+                <div className="flex items-center gap-2.5">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
                   </span>
-                  <span className="text-white text-sm">{jobTarget.availability}</span>
+                  <span className="text-white/70 text-[13px]">{jobTarget.availability}</span>
                 </div>
               </div>
             </div>
@@ -235,46 +337,74 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         </motion.div>
       </section>
 
-      {/* Skills Section */}
-      <section className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ========= Skills Section ========= */}
+      <section className="pb-32 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        {/* 节标题 */}
         <motion.div
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-16"
         >
-           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">{data.skills.title}</h2>
-           <div className="w-16 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+          <span className="text-label mb-4 block">{isZh ? '技术能力' : 'Technical Skills'}</span>
+          <h2 className="heading-section text-white mb-3">{data.skills.title}</h2>
+          <div className="section-divider mt-5" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {Object.entries(data.skills.categories).map(([category, categoryData], idx) => {
             const catData = categoryData as { icon: string; items: { name: string; icon: string }[] };
             const IconComponent = SKILL_CATEGORY_ICONS[catData.icon];
+
             return (
               <motion.div
                 key={category}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.08 }}
-                className="bg-surface rounded-2xl p-6 border border-white/5 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 group"
+                transition={{
+                  delay: idx * 0.06,
+                  duration: 0.55,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                className="group relative rounded-2xl p-5 border border-white/[0.07] bg-surface
+                  hover:border-white/[0.12] transition-all duration-400
+                  hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)]
+                  hover:-translate-y-1"
               >
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-white/5 to-transparent border border-white/5 group-hover:from-primary/20 group-hover:to-transparent transition-all">
-                    {IconComponent && <IconComponent className="text-gray-300 group-hover:text-primary transition-colors" size={20} />}
+                {/* 顶部光晕（hover时显示） */}
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-t-2xl" />
+
+                {/* 分类头部 */}
+                <div className="flex items-center gap-3 mb-5 pb-4 border-b border-white/[0.05]">
+                  <div className="flex-shrink-0 p-2 rounded-xl bg-white/[0.04] border border-white/[0.06]
+                    group-hover:bg-primary/[0.1] group-hover:border-primary/[0.15] transition-all duration-300">
+                    {IconComponent && (
+                      <IconComponent
+                        className="text-white/40 group-hover:text-primary transition-colors duration-300"
+                        size={16}
+                        strokeWidth={1.5}
+                      />
+                    )}
                   </div>
-                  <h3 className="text-lg font-bold text-white">{category}</h3>
+                  <h3 className="text-[14px] font-semibold text-white/70 group-hover:text-white/90 transition-colors duration-300 tracking-tight">
+                    {category}
+                  </h3>
                 </div>
-                <div className="flex flex-wrap gap-2.5">
+
+                {/* 技能标签 */}
+                <div className="flex flex-wrap gap-1.5">
                   {catData.items.map((skill) => (
                     <span
                       key={skill.name}
-                      className="relative overflow-hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white/5 text-gray-400 border border-white/5 group-hover:text-white group-hover:border-white/20 transition-all cursor-default"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[12px] font-medium
+                        bg-white/[0.04] text-white/40 border border-white/[0.05]
+                        group-hover:text-white/60 group-hover:border-white/[0.1]
+                        transition-all duration-300 cursor-default"
                     >
-                      <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      <span className="relative text-sm">{skill.icon}</span>
-                      <span className="relative">{skill.name}</span>
+                      <span className="text-[11px]">{skill.icon}</span>
+                      <span>{skill.name}</span>
                     </span>
                   ))}
                 </div>
@@ -283,6 +413,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
           })}
         </div>
       </section>
+
     </div>
   );
 };

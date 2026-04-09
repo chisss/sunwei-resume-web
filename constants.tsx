@@ -17,8 +17,8 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
     },
     hero: {
       name: '孙伟',
-      title: '资深 Java 工程师',
-      tagline: '8年经验 · 架构设计 · 团队管理 · 金融科技专家 · 保险科技 · AI',
+      title: '资深 Java 工程师 / AI Agent 研发',
+      tagline: '8年经验 · 架构设计 · 团队管理 · 金融科技 · AI Agent',
       avatar: AVATAR_URL,
       details: {
         age: '30岁',
@@ -33,12 +33,12 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
         wechat: 'woshige345'
       },
       summary: [
-        '8年Java后端开发经验，曾任职于度小满金融、众安保险等头部企业，具备扎实的技术功底与系统架构能力。',
-        '深度理解互联网保险、信贷核心业务，主导过多个核心系统（用户触达、信贷核心、交易中台、风控系统）从0到1的建设。',
-        '精通Spring Cloud微服务架构，具备高并发、分布式系统（RocketMQ, Redis, MySQL分库分表）的深度调优经验。',
-        '具备优秀的技术攻坚与团队管理能力（敏捷开发），能从技术与业务双视角驱动系统优化。',
-        '主导多次核心系统重构（DDD交易中台/消息平台/微服务迁移），确保线上零故障，代码质量与可维护性大幅提升。',
-        '关注AI前沿技术，探索LLM与业务融合，实践LangChain4J + Dify构建企业级RAG智能问答系统。'
+        '8年Java后端开发经验，曾任职于度小满金融、众安保险等头部企业，具备扎实的技术功底与行业实践积累。',
+        '深耕互联网保险、互联网金融信贷等核心业务领域，对业务逻辑、场景链路及行业痛点有深刻洞察。',
+        '在用户触达、消息触达及信贷核心系统等关键模块开发中积累了丰富实战经验，主导过多系统从设计到落地的全流程。',
+        '精通SpringCloud微服务架构设计与落地，具备分布式系统搭建、优化的成熟经验；同时具备一定前端开发能力，可跨栈协作推进全链路开发。',
+        '擅长带领团队攻克技术瓶颈与业务难点；熟悉敏捷开发流程，具备敏捷团队管理经验，可规范推进迭代节奏。',
+        '具备AI+业务场景落地能力，熟悉 Agentic workflow、RAG 系统搭建，拥有在企业环境中搭建 AI 智能体协作平台的经验。'
       ]
     },
     skills: {
@@ -47,90 +47,58 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
         'Java生态': {
           icon: 'code',
           items: [
-            { name: 'Java', icon: '☕' },
-            { name: 'JVM调优', icon: '⚙️' },
-            { name: 'JUC并发', icon: '🔄' },
-            { name: 'NIO', icon: '📡' },
+            { name: 'Java 21', icon: '☕' },
+            { name: 'JVM原理', icon: '⚙️' },
+            { name: '并发编程', icon: '🔄' },
             { name: '设计模式', icon: '🧩' },
-            { name: '数据结构与算法', icon: '📊' },
           ]
         },
         '微服务架构': {
           icon: 'layers',
           items: [
+            { name: 'Spring Boot 3', icon: '🍃' },
             { name: 'Spring Cloud', icon: '🌥️' },
-            { name: 'Spring Boot', icon: '🍃' },
-            { name: 'Dubbo', icon: '🔗' },
             { name: 'Nacos', icon: '📋' },
             { name: 'Gateway', icon: '🚪' },
             { name: 'Feign', icon: '📨' },
-            { name: 'Sentinel', icon: '🛡️' },
           ]
         },
-        '中间件': {
-          icon: 'server',
+        '中间件 & 数据库': {
+          icon: 'database',
           items: [
+            { name: 'MySQL / PG', icon: '🗄️' },
             { name: 'RocketMQ', icon: '🚀' },
-            { name: 'Kafka', icon: '📬' },
             { name: 'Redis', icon: '⚡' },
             { name: 'ElasticSearch', icon: '🔍' },
-            { name: 'Zookeeper', icon: '🐘' },
-            { name: 'RabbitMQ', icon: '🐰' },
+            { name: 'ClickHouse', icon: '📊' },
           ]
         },
         '云原生 & DevOps': {
           icon: 'cloud',
           items: [
             { name: 'Docker', icon: '🐳' },
-            { name: 'Kubernetes', icon: '☸️' },
-            { name: 'ServiceMesh', icon: '🕸️' },
             { name: 'Linux', icon: '🐧' },
+            { name: 'ServiceMesh', icon: '🕸️' },
             { name: 'CI/CD', icon: '🔄' },
-            { name: 'Jenkins', icon: '🏗️' },
-          ]
-        },
-        '数据库': {
-          icon: 'database',
-          items: [
-            { name: 'MySQL', icon: '🗄️' },
-            { name: 'SQL优化', icon: '⚡' },
-            { name: 'Oracle', icon: '🏛️' },
-            { name: 'ShardingSphere', icon: '🔀' },
-            { name: 'MyBatis', icon: '📝' },
-            { name: 'MyBatis-Plus', icon: '📝' },
-          ]
-        },
-        '前端 & 工具': {
-          icon: 'globe',
-          items: [
-            { name: 'Vue.js', icon: '💚' },
-            { name: 'Element-UI', icon: '🎨' },
-            { name: 'React', icon: '⚛️' },
-            { name: 'RESTful API', icon: '🔌' },
-            { name: 'Git', icon: '📦' },
-            { name: 'Maven', icon: '🏗️' },
           ]
         },
         'AI & 智能化': {
           icon: 'bot',
           items: [
-            { name: 'Vibe Coding', icon: '🎵' },
-            { name: 'LangChain4J', icon: '🔗' },
-            { name: 'Dify工作流', icon: '🤖' },
-            { name: 'Prompt Engineering', icon: '✍️' },
-            { name: 'RAG', icon: '📚' },
-            { name: 'AI Agent', icon: '🧠' },
+            { name: 'LangChain', icon: '🔗' },
+            { name: 'LangGraph', icon: '🕸️' },
+            { name: 'RAG & Milvus', icon: '📚' },
+            { name: 'Prompt', icon: '✍️' },
+            { name: 'MCP Server', icon: '🔌' },
           ]
         },
-        '团队管理': {
-          icon: 'shield',
+        '前端 & 协作': {
+          icon: 'globe',
           items: [
+            { name: 'React 19 & Vue', icon: '⚛️' },
             { name: '敏捷开发', icon: '🏃' },
-            { name: 'Code Review', icon: '👀' },
-            { name: '技术评审', icon: '📋' },
-            { name: '团队培训', icon: '🎓' },
             { name: '架构决策', icon: '🏛️' },
-            { name: '项目交付', icon: '🚀' },
+            { name: '团队管理', icon: '👥' },
           ]
         },
       }
@@ -141,68 +109,67 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
         {
           id: 'xiaoheng',
           company: '小恒数科',
-          role: '贷前贷中业务组技术负责人',
+          role: 'Java高级开发工程师 / 贷前贷中业务组技术负责人',
           period: '2025.03 - 至今',
           description: [
-            '负责贷前贷中业务的技术管理与架构决策，统筹风控系统与流量分发业务。'
+            '负责贷前贷中业务技术管理与架构决策，统筹风控系统与流量分发业务，推动AI工具在研发流程中的应用。'
           ],
           achievements: [
-            '主导风控系统从0到1架构设计，接入决策引擎（Drools），实现端到端全链路流程，提升风险决策准确性。',
-            '牵头首个渠道方与资金方接入项目，实现进件、授信、用信、放款全流程闭环。',
-            '推动研发流程标准化（代码评审/自动化测试/发布流程），解决技术瓶颈，团队整体交付效率提升50%+。',
-            '构建云原生高可用架构（RDS, RocketMQ, Nacos），将业务中断率降低至0.1%以下。',
-            '设计流量分发路由系统，支持多维度策略（用户等级/评分/渠道），单月盘活无效流量价值超200万元。'
+            '主导风控系统从0到1架构设计与落地，成功接入决策引擎，端到端疏通风控-决策-模型全链路流程，提升风险决策准确性。',
+            '牵头首个渠道方与资金方接入项目，统筹设计并实现APP/API流量管理、进件、授信、用信、资金路由及放款全流程闭环。',
+            '设计并落地业务与技术双维度监控告警体系，覆盖卡单预警与资源指标，将业务中断率降低至0.1%以下。',
+            '牵头“流量分发-贷超”与“双融担-权益”等重点项目架构设计，通过模块化重构使系统业务支撑能力提升50%。',
+            '推动研发全流程规范化建设，在团队中推广AI相关知识技能与工具的广泛使用，提升团队研发效率。'
           ]
         },
         {
           id: 'xinfei',
-          company: '信飞科技风险管理',
-          role: 'Java资深开发工程师',
+          company: '信飞科技',
+          role: 'Java资深开发工程师 / 用户组-消息平台和触达中台技术负责人',
           period: '2024.02 - 2024.05',
-          description: ['用户组 - 消息平台和消息触达中台技术负责人。'],
+          description: ['负责消息平台与消息触达中台重构，主导多渠道规模化接入与系统架构升级。'],
           achievements: [
-            '主导消息平台重构，采用"接入层+接出层"双层架构，新渠道接入从7天缩短至1天。',
-            '优化RocketMQ投递机制（顺序消息/事务消息/死信队列），消息发送成功率从92%提升至99.5%，延迟降至500ms以内。',
-            '设计无侵入式接入方案，集成20+核心业务场景，开发量减少60%。',
-            '引入Groovy脚本引擎实现渠道映射规则热更新，无需重启即可调整路由策略。'
+            '主导完成10+主流短信渠道及5+推送服务接入，将单渠道接入周期从7天缩短至2天。',
+            '牵头消息平台重构与触达系统设计，消息发送成功率提升至95%以上，催收类提升至75%，延迟降至500ms内。',
+            '搭建消息渠道标准化接入框架，实现渠道配置化接入，新增渠道无需代码开发即可上线。',
+            '设计无侵入式接入方案，全量集成贷前、贷中、贷后等20+核心消息场景，业务方接入效率提升80%。'
           ]
         },
         {
           id: 'zhongan',
           company: '众安国际',
-          role: '后端高级研发工程师',
+          role: '后端高级研发工程师 / 保险保全系统',
           period: '2022.04 - 2023.12',
-          description: ['负责基线保全系统核心模块设计与开发，主导代码质量提升专项。'],
+          description: ['主导保险保全系统核心模块设计与开发，聚焦保全业务全流程优化。'],
           achievements: [
-            '主导保全系统全流程优化，核心接口响应时间缩短40%，代码复用率提升25%。',
-            '负责全系统文档体系建设（20+份核心文档），降低跨团队沟通成本60%。',
-            '提升单元测试覆盖率至90%，自动化测试通过率达98%。',
-            '推动Sonar代码规范落地，消除200+项告警，线上Bug率下降55%。'
+            '主导保单复效、终止、变更及投连险专项等核心场景开发落地，使单项处理效率提升50%，接入速度提升30%+。',
+            '负责保全系统全生命周期文档建设，形成标准化文档体系，提升团队协作与维护效率。',
+            '针对高频保全项开展流程梳理与代码重构，解决性能瓶颈与可维护性问题，提升系统整体质量。'
           ]
         },
         {
           id: 'duxiaoman',
-          company: '度小满金融',
-          role: 'Java高级研发工程师',
+          company: '度小满科技',
+          role: 'Java高级研发工程师 / 消息触达与交易中台',
           period: '2020.05 - 2022.04',
-          description: ['保险创新业务部，负责交易中台重构与消息触达系统建设。'],
+          description: ['主导消息触达中台从0到1建设，并参与支付交易中台核心重构。'],
           achievements: [
-            '主导交易中台DDD重构，消除循环依赖与深层嵌套，代码可维护性评分从65提升至92。',
-            '搭建保险消息触达中台，整合短信/微信/邮件通道，支持日均50万+消息精准发送。',
-            '将核心批处理任务迁移至Python生态（Pandas/APScheduler），执行时间缩短35%。',
-            '设计基于状态模式的交易生命周期管理，新业务接入周期从15天缩短至5天。'
+            '牵头消息触达中台设计与开发，聚焦保险用户全生命周期触达场景，支撑续费率核心业务指标提升。',
+            '主导保险交易与支付中台全量重构，进行架构分层改造、核心链路梳理及异常处理机制升级。',
+            '推动保险核心批处理任务从传统技术栈迁移至Python生态，重构任务调度逻辑与执行引擎。'
           ]
         },
         {
           id: 'fanwei',
           company: '上海泛微网络',
-          role: 'Java微服务架构',
+          role: 'Java微服务架构 / 基础架构研发',
           period: '2018.07 - 2020.05',
-          description: ['负责契约锁基础服务微服务改造迁移。'],
+          description: ['主导基于SpringCloud生态的基础服务微服务架构从0到1构建与改造。'],
           achievements: [
-            '主导OSS单体系统（50万+行代码）向Spring Cloud微服务架构迁移，核心服务可用性提升至99.95%。',
-            '设计基于本地消息表的分布式事务方案，保障10万+跨服务操作的数据一致性，准确率100%。',
-            '开发代码生成与自动化部署工具集，项目交付效率提升40%。'
+            '完成技术栈选型与旧系统重构迁移，搭建注册中心、配置中心、网关等核心组件，升级为高可用微服务架构。',
+            '设计开发通用工具类组件库，构建并维护运维系统基础服务（监控、日志聚合等）。',
+            '搭建Vue前端技术框架，为核心基础服务开发独立前端管理系统，实现配置监控可视化。',
+            '定制化开发服务网关与远程调用框架，优化短信、邮件等消息触达系统的重试与熔断策略。'
           ]
         }
       ]
@@ -211,72 +178,26 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
       title: '精选项目实战',
       items: [
         {
-          id: 'ai-assistant',
-          name: 'AI智能助手平台',
-          role: '技术负责人 & 架构师',
-          period: '2025.01 - 至今',
-          background: '随着大语言模型技术的成熟，企业内部存在大量重复性问答和文档检索需求，传统搜索方式效率低下。需要构建一套基于RAG的智能问答系统，提升内部知识管理和客户服务效率。',
-          techStack: ['LangChain4J', 'Dify', 'Spring Boot', 'Milvus', 'Redis', 'Vue3'],
-          solution: '基于LangChain4J构建后端RAG链路，集成Milvus向量数据库实现语义检索；利用Dify搭建可视化Agent工作流，实现多轮对话、知识库管理；结合Prompt Engineering优化回答质量。',
-          outcome: '内部知识检索效率提升80%，客服首次解决率从45%提升至78%，节省人工客服成本约30%。',
+          id: 'agent-platform',
+          name: '企业 Agent 协作平台',
+          role: '项目负责人',
+          period: '2026.01 - 至今',
+          background: '面向多租户研发和业务团队提供 Agent 管理、Spec 驱动研发、上下文沉淀、工作流协同和知识检索能力，目标是把传统研发流程升级为可编排、可追踪、可复用的 Agent 协作体系。',
+          techStack: ['Java 21', 'Spring Boot 3', 'LangChain', 'LangGraph', 'Milvus', 'RabbitMQ', 'React 19'],
+          solution: '基于 LangChain 和 LangGraph 落地 Agentic Loop 支持多轮推理与工具调用；设计四层上下文注入机制并接入 Milvus 实现 RAG；搭建 MCP Server 等扩展能力；整合 Flowable、ClickHouse、RabbitMQ 构建基础底座。',
+          outcome: '成功打造企业级 Agent 开发与治理平台底座，支撑多Agent协作、知识库增强及全面的成本核算与监控体系。',
           highlights: [
-            '基于LangChain4J设计RAG（检索增强生成）链路，实现文档分片、向量化、语义检索全流程',
-            '利用Dify工作流引擎编排多步Agent，支持工具调用、条件分支、人工审核节点',
-            '集成Milvus向量数据库，支持千万级文档毫秒级语义相似度检索',
-            '设计Prompt模板管理系统，支持版本控制与A/B测试，优化回答准确率',
-            '实现流式输出（SSE），提升用户交互体验',
-            '采用Vibe Coding方式高效协作开发前端界面，大幅提升开发效率'
+            '主导 Agent 执行链路设计，支持多Agent模式下子图、并行、循环、模型路由与自动降级',
+            '设计四层上下文注入机制（项目、文档、输入、历史），接入 Milvus 实现 RAG 检索增强',
+            '搭建 Skill、内置工具、MCP Server 扩展能力，支持 Agent 动态绑定外部能力',
+            '结合 RabbitMQ + WebSocket 实现执行过程实时推送、团队协同和状态可视化',
+            '基于执行记录与模型单价建设成本分析能力，支持多维度成本核算'
           ],
           responsibilities: [
-            '负责整体技术架构设计与技术选型（LangChain4J vs Spring AI）',
-            '设计向量数据库Schema及检索策略优化',
-            '编排Dify工作流，实现智能路由与多Agent协作',
-            '主导Prompt Engineering，优化大模型回答质量',
-            '对接多个LLM API（GPT-4/文心一言/通义千问），设计模型切换与降级策略'
-          ]
-        },
-        {
-          id: 'traffic-dist',
-          name: '聚小花流量分发与贷超项目',
-          role: '技术负责人',
-          period: '2025.08',
-          background: '解决闲置流量价值流失问题，原系统缺乏产品聚合展示与精准推荐能力，需构建"流量分发+贷超"双重能力，实现流量变现最大化。',
-          techStack: ['Spring Cloud', 'Vue3', 'Drools', 'Redis Cluster', 'RocketMQ', 'MySQL'],
-          solution: '升级路由系统中枢，支持多维度策略（用户等级/评分/渠道属性）；设计贷超前端架构实现"千人千面"动态展示；整合风控数据实现精准推荐。',
-          outcome: '产品上架周期从7天缩短至2天，页面停留时长提升40%，单月盘活无效流量价值超200万元。',
-          highlights: [
-            '基于Drools规则引擎设计多维路由策略，支持用户等级、信用评分、渠道属性等维度动态匹配',
-            '设计贷超前端架构，通过ABTest实现"千人千面"个性化产品推荐',
-            '采用Redis Cluster缓存热点路由规则，路由决策延迟<10ms',
-            '实现产品上下架动态管理后台，运营可自助配置，上架周期从7天缩短至2天'
-          ],
-          responsibilities: [
-            '负责整体系统架构设计，制定技术方案',
-            '主导路由引擎核心逻辑开发',
-            '协调前后端联调与性能优化',
-            '推进灰度发布与线上监控体系搭建'
-          ]
-        },
-        {
-          id: 'risk-control',
-          name: '小恒数科风控系统建设',
-          role: '技术负责人',
-          period: '2025.03 - 2025.06',
-          background: '公司信贷业务快速扩张，缺乏统一的风控决策引擎，风险识别依赖人工审核，效率低、漏洞多。需从0到1构建自动化风控系统。',
-          techStack: ['Spring Cloud', 'Drools', 'Redis', 'RocketMQ', 'MySQL', 'Nacos'],
-          solution: '基于Drools搭建规则引擎核心，设计"数据采集-特征计算-规则命中-决策输出"四段式流水线；引入Nacos动态配置实现规则热更新；通过RocketMQ实现异步风控事件处理。',
-          outcome: '风控全流程自动化，审批效率提升300%，欺诈识别准确率达95%+，人工审核工作量减少70%。',
-          highlights: [
-            '设计四段式风控流水线：数据采集→特征计算→规则命中→决策输出',
-            '基于Drools搭建规则引擎，支持100+条风控规则热更新',
-            '引入Redis缓存用户画像与历史特征，决策延迟控制在200ms内',
-            '设计风控事件溯源机制，支持全链路审计追踪'
-          ],
-          responsibilities: [
-            '从0到1完成风控系统架构设计',
-            '主导决策引擎核心开发',
-            '对接外部数据源（征信/反欺诈）',
-            '搭建风控监控大盘与告警体系'
+            '主导平台核心架构设计与后端能力建设',
+            '设计并实现 Agent 执行链路与多轮推理逻辑',
+            '构建四层上下文注入机制与向量检索模块',
+            '推进 Flowable 深度编排与自定义工具沙箱等高级特性规划'
           ]
         },
         {
@@ -284,65 +205,62 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
           name: '信飞科技消息平台重构',
           role: '系统设计 & 核心开发',
           period: '2024.03 - 2024.05',
-          background: '因贷后催收强监管导致短信渠道频繁被封，急需解决渠道接入慢、无智能路由、接口不标准的三大痛点。原系统与渠道商强耦合，每次渠道切换需7天+开发周期。',
-          techStack: ['Groovy', 'RocketMQ', 'Strategy Pattern', 'SpringBoot', 'Redis', 'MySQL'],
-          solution: '设计"接入层+接出层"双层适配架构；引入Groovy脚本动态配置映射规则，无需重启即可调整路由；设计失败消息智能重路由策略，自动切换备用渠道。',
-          outcome: '新渠道接入缩短至1天，短信送达率提升至96%，贷后催收有效触达提升40%，投诉率降低35%。',
+          background: '贷后催收受强监管影响短信渠道频遭封禁，原系统面临渠道接入需硬编码（平均7天）、发送失败无智能路由、接口未标准化等痛点，严重制约应急响应。',
+          techStack: ['Groovy', 'RocketMQ', 'Spring Boot', 'Redis', 'MySQL'],
+          solution: '设计“接入层+接出层”双层适配架构；通过 Groovy 脚本动态配置渠道映射规则，屏蔽差异；结合渠道状态监控设计失败消息智能重路由策略。',
+          outcome: '新渠道接入周期从7天缩短至1天；短信送达率从82%提升至96%，有效触达量提升40%；配置化测试机制降低测试成本60%。',
           highlights: [
-            '设计双层适配架构（接入层统一协议 + 接出层渠道适配），彻底解耦业务与渠道',
-            '引入Groovy脚本引擎实现渠道映射规则热更新，运维人员可直接配置',
-            '基于策略模式实现智能路由，自动根据渠道健康度、送达率、成本进行最优选路',
-            '设计死信队列+重试机制，消息发送成功率从92%提升至99.5%'
+            '创新设计“接入层+接出层”架构，实现参数自动转换与跨渠道接口标准化',
+            '引入 Groovy 脚本动态加载机制，无需重启服务即可完成新渠道接入与规则更新',
+            '设计失败消息自动重路由策略，实时切换备用渠道保障触达连续性',
+            '配置化测试机制减少80%渠道适配代码开发量'
           ],
           responsibilities: [
-            '负责整体架构设计与技术方案评审',
-            '开发Groovy脚本引擎与规则管理后台',
-            '实现RocketMQ消息投递优化（顺序消息/事务消息/死信队列）',
-            '主导压测与性能调优'
+            '设计重构整体技术方案（架构分层、接口标准化）',
+            '牵头核心代码开发，攻克渠道适配、动态配置等关键技术难题',
+            '统筹测试与上线验证，保障系统稳定运行'
           ]
         },
         {
-          id: 'trading-platform',
-          name: '度小满保险交易中台重构',
-          role: '核心技术负责人',
-          period: '2021.09 - 2021.12',
-          background: '业务耦合严重，枚举类臃肿（单文件3000+行），代码圈复杂度高（核心方法超100），新业务接入需15天以上，严重限制业务拓展速度。',
-          techStack: ['DDD', 'Design Patterns', 'Java', 'MySQL', 'Spring Boot', 'RocketMQ'],
-          solution: '基于DDD划分业务边界（投保/退保/理赔/续保四大领域）；使用"枚举+策略模式"分离逻辑分支；引入状态模式管理交易生命周期，以事件驱动实现状态流转。',
-          outcome: '新业务接入缩短至5天，线上Bug率下降70%，核心方法响应时间缩短35%，代码可维护性评分从65提升至92。',
+          id: 'zhongan-quality',
+          name: '众安国际保全系统代码质量提升',
+          role: '项目负责人',
+          period: '2023.05 - 2023.08',
+          background: '保全系统长期运行暴露出单测覆盖率低（70%）、代码存在“坏味道”维护困难、自动化测试稳定性不足、核心保全项处理耗时偏长、敏感数据缺乏统一加密等风险。',
+          techStack: ['Java', 'Spring Boot', 'JUnit', 'Swagger', 'MySQL'],
+          solution: '制定系统测试体系升级计划；梳理重构冗长方法与核心链路；设计落地敏感字段（身份证/银行卡）全链路加密；统筹日志与接口文档规范化建设。',
+          outcome: '单测覆盖率提升至90%，自动化通过率达98%；核心项处理时长缩短30%；故障定位时间缩短至30分钟内；消除数据泄露合规风险。',
           highlights: [
-            '基于DDD划分4大领域边界（投保/退保/理赔/续保），消除循环依赖',
-            '使用"枚举+策略模式"替代3000+行if-else分支，圈复杂度从100+降至15',
-            '引入状态模式管理交易生命周期，以领域事件驱动状态流转',
-            '设计统一的业务扩展点SPI，新险种接入仅需实现接口即可'
+            '系统性梳理代码库，重构高风险逻辑，降低代码复杂度40%',
+            '设计落地敏感数据全链路加密存储与传输体系，满足金融合规要求',
+            '统一日志输出格式与级别标准，问题排查效率提升50%',
+            '基于 Swagger 规范接口文档，跨团队沟通偏差率减少60%'
           ],
           responsibilities: [
-            '主导DDD领域建模与架构设计',
-            '核心重构代码开发与Code Review',
-            '制定渐进式重构计划，保障线上零故障',
-            '输出架构设计文档与团队技术分享'
+            '制定系统优化整体方案与优先级规划',
+            '牵头测试体系升级、代码重构与性能优化落地',
+            '推动敏感数据加密规则设计与全生命周期文档建设'
           ]
         },
         {
-          id: 'contract-microservice',
-          name: '契约锁基础服务微服务迁移',
-          role: '架构规划',
-          period: '2019.08 - 2020.03',
-          background: '原OSS单体系统代码超50万行，耦合严重（核心模块循环依赖），升级风险高，缺乏监控，单次部署耗时40分钟+。',
-          techStack: ['Spring Cloud', 'Seata', 'RabbitMQ', 'Docker', 'Nginx', 'MySQL'],
-          solution: '按业务域拆分为8个微服务；设计基于本地消息表的分布式事务方案替代Seata（降低侵入性）；引入Docker容器化部署 + Nginx网关层负载均衡。',
-          outcome: '服务解耦，故障影响范围缩小90%，核心可用性达99.95%，分布式事务数据一致性准确率100%，部署时间从40分钟降至5分钟。',
+          id: 'duxiaoman-msg',
+          name: '度小满保险消息触达中台系统搭建',
+          role: '后台开发',
+          period: '2020.05 - 2021.03',
+          background: '为提升保险续费率，需整合分散的短信、语音等触达手段构建统一入口，并搭建支持多产品策略的 AB 投放测试平台与全链路监控，解决触达难追踪、策略优化滞后等问题。',
+          techStack: ['Spring Boot', 'Redis', 'MySQL', 'RocketMQ', 'Vue'],
+          solution: '设计多通道接入方案及路由策略；引入 Redis 缓存高频数据，设计“binlog+MQ+双删”方案保障缓存一致性；开发策略灰度发布与 AB 测试平台。',
+          outcome: '续期续费率提升15%；消息发送峰值延迟从30s降至2s内，数据库压力骤降；运营策略上线周期从3天缩短至1天。',
           highlights: [
-            '将50万行单体代码按业务域拆分为8个独立微服务',
-            '设计基于本地消息表+MQ的最终一致性方案，保障跨服务数据一致',
-            '开发代码生成工具，自动生成Controller/Service/Mapper标准代码',
-            '搭建Docker容器化部署流程，部署时间从40分钟降至5分钟'
+            '设计多通道接入方案，保障延迟<3s、发送成功率99%+',
+            '基于“binlog增量订阅+消息队列+双删更新”方案，确保高并发下缓存一致性达99.9%',
+            '对离线消息提前预处理并缓存，缓解实时计算压力',
+            '主导后台页面与多维数据看板设计，支持 AB 策略灵活配置'
           ],
           responsibilities: [
-            '负责微服务拆分方案设计与边界划定',
-            '设计分布式事务方案并主导核心开发',
-            '搭建自动化部署与监控体系',
-            '组织技术评审与团队培训'
+            '主导触达中台从0到1架构设计、技术栈选型与核心开发',
+            '设计多通道接入方案与缓存一致性保障机制',
+            '统筹前后端团队推进 AB 测试平台与数据看板落地'
           ]
         }
       ]
@@ -353,35 +271,35 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
       posts: [
         {
           id: '1',
-          title: '从单体到微服务：契约锁系统的拆分与分布式事务实践',
-          summary: '详细复盘如何将50万行代码的单体系统拆分为微服务架构，重点讲解基于MQ的最终一致性事务方案设计与踩坑经验。',
-          date: '2024-05-20',
+          title: '企业级 Agent 协作平台架构演进与 LangGraph 落地实践',
+          summary: '详细解析如何基于 LangChain 和 LangGraph 构建支持多轮推理与动态工具调用的企业级 Agent 底座，探讨 RAG 与上下文管理的最佳实践。',
+          date: '2026-02-15',
           readTime: '15 min',
-          tags: ['Microservices', 'Distributed Transaction', 'Architecture']
+          tags: ['AI Agent', 'LangGraph', 'Architecture']
         },
         {
           id: '2',
-          title: 'DDD在金融交易中台重构中的落地实战',
-          summary: '基于度小满交易中台重构案例，探讨如何利用领域驱动设计（DDD）解决业务逻辑复杂、代码腐化的问题，实现业务能力的快速复用。',
-          date: '2024-02-15',
+          title: '消息平台高可用重构：Groovy 动态路由与双层架构实践',
+          summary: '复盘信飞科技消息平台重构经验，分享如何通过“接入层+接出层”设计与 Groovy 脚本引擎解决多渠道接入痛点，实现配置化热更新。',
+          date: '2024-06-10',
           readTime: '12 min',
-          tags: ['DDD', 'Refactoring', 'Design Patterns']
+          tags: ['Message Platform', 'Groovy', 'Design Patterns']
         },
         {
           id: '3',
-          title: '高并发场景下的RocketMQ调优与消息积压处理',
-          summary: '结合信飞科技消息平台实战，分享如何通过调整线程模型、优化消费逻辑及分区扩容来解决千万级流量下的消息积压难题。',
-          date: '2024-04-10',
+          title: '金融系统高并发下的缓存一致性保障方案',
+          summary: '基于实战案例深度剖析 "binlog+MQ+延迟双删" 架构在千万级流量场景下保障 Redis 与 MySQL 数据最终一致性的原理。',
+          date: '2021-04-20',
           readTime: '10 min',
-          tags: ['RocketMQ', 'Performance Tuning', 'High Concurrency']
+          tags: ['Redis', 'High Concurrency', 'Consistency']
         },
         {
           id: '4',
-          title: 'LangChain4J + Dify 构建企业级RAG智能问答系统',
-          summary: '从技术选型到落地实践，详解如何用LangChain4J搭建RAG链路，结合Dify工作流编排实现企业知识库智能问答，附完整架构方案。',
-          date: '2025-01-15',
-          readTime: '18 min',
-          tags: ['AI', 'RAG', 'LangChain4J', 'Dify']
+          title: '遗留系统代码质量提升与重构战术',
+          summary: '从单测覆盖率、坏味道清理到核心链路精简，探讨如何在不停机、不影响业务迭代的前提下，系统性提升保全系统代码质量。',
+          date: '2023-09-05',
+          readTime: '14 min',
+          tags: ['Refactoring', 'Code Quality', 'Testing']
         }
       ]
     }
@@ -395,8 +313,8 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
     },
     hero: {
       name: 'Sun Wei',
-      title: 'Senior Java Developer',
-      tagline: '8 Yrs Exp · Architecture · Team Lead · Fintech · InsurTech · AI',
+      title: 'Senior Java / AI Agent Engineer',
+      tagline: '8 Yrs Exp · Architecture · Team Lead · Fintech · AI Agent Platform',
       avatar: AVATAR_URL,
       details: {
         age: '30',
@@ -411,12 +329,12 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
         wechat: 'woshige345'
       },
       summary: [
-        '8 years backend experience in top fintech firms (Du Xiaoman, ZhongAn), with solid technical and architecture skills.',
-        'Expert in Internet Insurance & Credit Core Systems, leading multiple 0-to-1 builds (messaging, credit core, trading platform, risk control).',
-        'Mastery of Spring Cloud & Distributed Systems (RocketMQ, Redis, MySQL Sharding), with deep performance tuning experience.',
-        'Proven Tech Lead with Agile methodology expertise, driving optimization from both tech & business perspectives.',
-        'Led multiple critical system refactors (DDD Trading Platform/Messaging Platform/Microservice Migration) with zero production incidents.',
-        'Exploring AI frontier — building enterprise RAG systems with LangChain4J + Dify for intelligent business integration.'
+        '8 years of Java backend experience in top fintech firms (Du Xiaoman, ZhongAn) with solid technical skills.',
+        'Deep business understanding of Internet Insurance and Financial Credit core systems and pain points.',
+        'Extensive practical experience in user reach, message platforms, and credit core systems development.',
+        'Mastery of SpringCloud microservices architecture, and high-concurrency distributed system optimization.',
+        'Proven Tech Lead with Agile methodology expertise, driving technical optimization.',
+        'Strong AI integration capability, experienced in Agentic Workflows, RAG, and building enterprise AI Agent Collaboration Platforms.'
       ]
     },
     skills: {
@@ -425,90 +343,58 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
         'Java Ecosystem': {
           icon: 'code',
           items: [
-            { name: 'Java', icon: '☕' },
+            { name: 'Java 21', icon: '☕' },
             { name: 'JVM Tuning', icon: '⚙️' },
-            { name: 'JUC Concurrency', icon: '🔄' },
-            { name: 'NIO', icon: '📡' },
+            { name: 'Concurrency', icon: '🔄' },
             { name: 'Design Patterns', icon: '🧩' },
-            { name: 'Data Structures', icon: '📊' },
           ]
         },
         'Microservices': {
           icon: 'layers',
           items: [
+            { name: 'Spring Boot 3', icon: '🍃' },
             { name: 'Spring Cloud', icon: '🌥️' },
-            { name: 'Spring Boot', icon: '🍃' },
-            { name: 'Dubbo', icon: '🔗' },
             { name: 'Nacos', icon: '📋' },
             { name: 'Gateway', icon: '🚪' },
             { name: 'Feign', icon: '📨' },
-            { name: 'Sentinel', icon: '🛡️' },
           ]
         },
-        'Middleware': {
-          icon: 'server',
+        'Middleware & DB': {
+          icon: 'database',
           items: [
-            { name: 'RocketMQ', icon: '🚀' },
-            { name: 'Kafka', icon: '📬' },
+            { name: 'MySQL / PG', icon: '🗄️' },
+            { name: 'RocketMQ / RabbitMQ', icon: '🚀' },
             { name: 'Redis', icon: '⚡' },
             { name: 'ElasticSearch', icon: '🔍' },
-            { name: 'Zookeeper', icon: '🐘' },
-            { name: 'RabbitMQ', icon: '🐰' },
+            { name: 'ClickHouse', icon: '📊' },
           ]
         },
         'Cloud & DevOps': {
           icon: 'cloud',
           items: [
             { name: 'Docker', icon: '🐳' },
-            { name: 'Kubernetes', icon: '☸️' },
-            { name: 'ServiceMesh', icon: '🕸️' },
             { name: 'Linux', icon: '🐧' },
+            { name: 'ServiceMesh', icon: '🕸️' },
             { name: 'CI/CD', icon: '🔄' },
-            { name: 'Jenkins', icon: '🏗️' },
-          ]
-        },
-        'Database': {
-          icon: 'database',
-          items: [
-            { name: 'MySQL', icon: '🗄️' },
-            { name: 'SQL Optimization', icon: '⚡' },
-            { name: 'Oracle', icon: '🏛️' },
-            { name: 'ShardingSphere', icon: '🔀' },
-            { name: 'MyBatis', icon: '📝' },
-            { name: 'MyBatis-Plus', icon: '📝' },
-          ]
-        },
-        'Frontend & Tools': {
-          icon: 'globe',
-          items: [
-            { name: 'Vue.js', icon: '💚' },
-            { name: 'Element-UI', icon: '🎨' },
-            { name: 'React', icon: '⚛️' },
-            { name: 'RESTful API', icon: '🔌' },
-            { name: 'Git', icon: '📦' },
-            { name: 'Maven', icon: '🏗️' },
           ]
         },
         'AI & Intelligence': {
           icon: 'bot',
           items: [
-            { name: 'Vibe Coding', icon: '🎵' },
-            { name: 'LangChain4J', icon: '🔗' },
-            { name: 'Dify Workflow', icon: '🤖' },
-            { name: 'Prompt Engineering', icon: '✍️' },
-            { name: 'RAG', icon: '📚' },
-            { name: 'AI Agent', icon: '🧠' },
+            { name: 'LangChain', icon: '🔗' },
+            { name: 'LangGraph', icon: '🕸️' },
+            { name: 'RAG & Milvus', icon: '📚' },
+            { name: 'Prompt', icon: '✍️' },
+            { name: 'MCP Server', icon: '🔌' },
           ]
         },
-        'Team Management': {
-          icon: 'shield',
+        'Frontend & Lead': {
+          icon: 'globe',
           items: [
-            { name: 'Agile/Scrum', icon: '🏃' },
-            { name: 'Code Review', icon: '👀' },
-            { name: 'Tech Review', icon: '📋' },
-            { name: 'Team Training', icon: '🎓' },
-            { name: 'Arch Decisions', icon: '🏛️' },
-            { name: 'Delivery Mgmt', icon: '🚀' },
+            { name: 'React 19 & Vue', icon: '⚛️' },
+            { name: 'Agile Dev', icon: '🏃' },
+            { name: 'Arch Design', icon: '🏛️' },
+            { name: 'Team Mgmt', icon: '👥' },
           ]
         },
       }
@@ -519,68 +405,67 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
         {
           id: 'xiaoheng',
           company: 'Xiaoheng Tech',
-          role: 'Tech Lead (Loan Business)',
+          role: 'Senior Java Dev / Pre & Mid-loan Tech Lead',
           period: '2025.03 - Present',
           description: [
-            'Led technical management for Pre-loan & Mid-loan business lines, overseeing risk control and traffic distribution systems.'
+            'Led technical management for Pre-loan & Mid-loan groups, overseeing risk control and traffic routing.'
           ],
           achievements: [
-            'Architected Risk Control System (0-1) with Drools engine, enabling full-link automated decision flow.',
-            'Led first external channel & funding integration, closing the loop on credit & loan processes.',
-            'Standardized R&D processes (code review/auto-testing/release), boosting delivery efficiency by 50%+.',
-            'Built Cloud-Native HA Architecture (RocketMQ, Nacos), reducing downtime to <0.1%.',
-            'Designed multi-dimensional traffic routing system, recovering 2M+ RMB from idle traffic monthly.'
+            'Architected Risk Control System from 0 to 1, integrating decision engine and full-link pipeline.',
+            'Led first funding channel integration, managing full API lifecycle from routing to loan settlement.',
+            'Built 2D monitoring system (biz & tech), reducing service downtime to < 0.1%.',
+            'Led Traffic Distribution core architecture remodel, boosting system extensibility by 50%.',
+            'Promoted AI tools adoption in Agile workflows, heavily improving team R&D efficiency.'
           ]
         },
         {
           id: 'xinfei',
           company: 'Xinfei Tech',
-          role: 'Senior Java Engineer',
+          role: 'Senior Java Eng / Messaging Platform Tech Lead',
           period: '2024.02 - 2024.05',
-          description: ['Tech Lead for Messaging Platform & Notification Center.'],
+          description: ['Tech Lead for Messaging Platform and Notification Middle-end.'],
           achievements: [
-            'Refactored Messaging Platform with Dual-Layer Architecture; channel integration time: 7 days -> 1 day.',
-            'Optimized RocketMQ delivery (ordered/transactional/DLQ); success rate 92% -> 99.5%, latency <500ms.',
-            'Designed non-intrusive integration for 20+ scenarios, reducing dev effort by 60%.',
-            'Introduced Groovy script engine for hot-reload channel routing rules without restart.'
+            'Integrated 10+ SMS channels and 5+ Push services, reducing integration time from 7 to 2 days.',
+            'Refactored Messaging Platform, boosting success rate to 95%+ and cutting latency to < 500ms.',
+            'Built config-driven channel integration framework, enabling zero-code new channel deployments.',
+            'Designed non-intrusive integration for 20+ scenarios, reducing dev effort by 80%.'
           ]
         },
         {
           id: 'zhongan',
           company: 'ZhongAn International',
-          role: 'Senior Backend Engineer',
+          role: 'Senior Backend Eng / Insurance System',
           period: '2022.04 - 2023.12',
-          description: ['Core design for Baseline Preservation System, led code quality improvement initiative.'],
+          description: ['Led core modules design for Insurance Preservation System.'],
           achievements: [
-            'Optimized full-link preservation process; API response time reduced by 40%, code reuse up 25%.',
-            'Established documentation standard (20+ docs), reducing communication costs by 60%.',
-            'Increased Unit Test coverage to 90%, Auto-test pass rate to 98%.',
-            'Led Sonar code quality enforcement, eliminating 200+ warnings, reducing production bugs by 55%.'
+            'Optimized full-link preservation process, boosting efficiency by 50% and access speed by 30%.',
+            'Established comprehensive system documentation standard for cross-team collaboration.',
+            'Refactored high-frequency code paths to resolve performance bottlenecks and tech debt.'
           ]
         },
         {
           id: 'duxiaoman',
-          company: 'Du Xiaoman Financial',
-          role: 'Senior Java Engineer',
+          company: 'Du Xiaoman Tech',
+          role: 'Senior Java Eng / Messaging & Trading Platform',
           period: '2020.05 - 2022.04',
-          description: ['Insurance Innovation Dept - Transaction Platform & Messaging System.'],
+          description: ['Built Messaging Middle Platform from scratch and refactored Trading Platform.'],
           achievements: [
-            'Refactored Transaction Platform using DDD; Code Maintainability Score 65 -> 92.',
-            'Built Messaging Middle Platform supporting 500k+ daily messages across SMS/WeChat/Email.',
-            'Migrated batch tasks to Python ecosystem (Pandas/APScheduler), reducing execution time by 35%.',
-            'Designed State Pattern-based transaction lifecycle, cutting new business onboarding from 15 to 5 days.'
+            'Built Messaging Middle Platform to support full insurance user lifecycle and boost renewal rate.',
+            'Refactored entire Insurance Trading Platform with layered architecture and upgraded exception handling.',
+            'Migrated batch tasks to Python ecosystem, modernizing job scheduling and execution engines.'
           ]
         },
         {
           id: 'fanwei',
           company: 'Weaver Network',
-          role: 'Microservices Architect',
+          role: 'Microservices Architect / Infrastructure',
           period: '2018.07 - 2020.05',
-          description: ['Led Contract Lock platform microservice migration.'],
+          description: ['Led 0-to-1 construction of SpringCloud based microservices infrastructure.'],
           achievements: [
-            'Led 500k+ LOC monolith to Spring Cloud microservices migration, availability up to 99.95%.',
-            'Designed local message table based distributed transaction, ensuring 100% consistency across 100k+ ops.',
-            'Developed code generation & auto-deployment toolset, improving delivery efficiency by 40%.'
+            'Migrated legacy monolith to SpringCloud microservices (Gateway, Nacos, Feign).',
+            'Developed common component libraries and DevOps backend tools.',
+            'Built Vue frontend management system for infrastructure monitoring visualization.',
+            'Customized API Gateway and routing framework for retry and circuit breaker policies.'
           ]
         }
       ]
@@ -589,72 +474,26 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
       title: 'Key Projects',
       items: [
         {
-          id: 'ai-assistant',
-          name: 'AI Intelligent Assistant Platform',
-          role: 'Tech Lead & Architect',
-          period: '2025.01 - Present',
-          background: 'With LLM maturity, enterprises face repetitive Q&A and document retrieval needs. Traditional search is inefficient. Need to build a RAG-based intelligent Q&A system to improve knowledge management and customer service.',
-          techStack: ['LangChain4J', 'Dify', 'Spring Boot', 'Milvus', 'Redis', 'Vue3'],
-          solution: 'Built RAG pipeline with LangChain4J, integrated Milvus for semantic search; Used Dify for visual Agent workflow orchestration with multi-turn conversation and knowledge base management; Optimized with Prompt Engineering.',
-          outcome: 'Knowledge retrieval efficiency up 80%, first-contact resolution rate 45% -> 78%, customer service cost reduced by 30%.',
+          id: 'agent-platform',
+          name: 'Enterprise Agent Collab Platform',
+          role: 'Project Lead',
+          period: '2026.01 - Present',
+          background: 'A multi-tenant platform providing Agent management, Spec-driven R&D, knowledge retrieval, and workflow orchestration to modernize traditional R&D processes.',
+          techStack: ['Java 21', 'Spring Boot 3', 'LangChain', 'LangGraph', 'Milvus', 'RabbitMQ', 'React 19'],
+          solution: 'Implemented Agentic Loop via LangChain/LangGraph; built 4-layer context injection with Milvus RAG; developed MCP Server integrations; integrated Flowable & ClickHouse.',
+          outcome: 'Successfully established a robust Enterprise Agent governance foundation, enabling multi-agent coordination and full-link cost monitoring.',
           highlights: [
-            'Designed RAG pipeline with LangChain4J: document chunking, vectorization, semantic retrieval',
-            'Used Dify workflow engine for multi-step Agent orchestration with tool calls and approval nodes',
-            'Integrated Milvus vector DB for millisecond-level semantic search across millions of documents',
-            'Built Prompt template management with version control and A/B testing',
-            'Implemented SSE streaming output for enhanced UX',
-            'Leveraged Vibe Coding for rapid frontend development'
+            'Led Agent execution pipeline supporting parallel, sub-graph, and routing logic.',
+            'Designed 4-layer context injection (Project, Doc, Input, History) with Milvus RAG.',
+            'Built extension capabilities via Skills, built-in tools, and MCP Server.',
+            'Real-time streaming and team coordination using RabbitMQ + WebSocket.',
+            'Multi-dimensional cost analysis based on execution history and model pricing.'
           ],
           responsibilities: [
-            'Overall architecture design and tech selection (LangChain4J vs Spring AI)',
-            'Vector DB schema design and retrieval strategy optimization',
-            'Dify workflow orchestration for intelligent routing and multi-Agent collaboration',
-            'Prompt Engineering for LLM response quality optimization',
-            'Multi-LLM API integration (GPT-4/ERNIE/Qwen) with fallback strategy'
-          ]
-        },
-        {
-          id: 'traffic-dist',
-          name: 'Traffic Distribution & Loan Supermarket',
-          role: 'Tech Lead',
-          period: '2025.08',
-          background: 'Monetize idle traffic and enable precise product recommendation with aggregated display capability.',
-          techStack: ['Spring Cloud', 'Vue3', 'Drools', 'Redis Cluster', 'RocketMQ', 'MySQL'],
-          solution: 'Upgraded routing core for multi-strategy distribution (user level/score/channel); Built dynamic frontend for personalized display; Integrated risk data for precision.',
-          outcome: 'Product launch cycle 7 days -> 2 days; User retention up 40%; Activated 2M+ RMB monthly value.',
-          highlights: [
-            'Designed multi-dimensional routing strategy with Drools engine for dynamic user-product matching',
-            'Built personalized frontend with A/B testing for "different products for different users"',
-            'Redis Cluster cached hot routing rules with <10ms decision latency',
-            'Implemented self-service product management dashboard, reducing launch cycle from 7 to 2 days'
-          ],
-          responsibilities: [
-            'Overall system architecture design and technical planning',
-            'Core routing engine development',
-            'Frontend-backend coordination and performance optimization',
-            'Canary release and monitoring system setup'
-          ]
-        },
-        {
-          id: 'risk-control',
-          name: 'Risk Control System (0-to-1)',
-          role: 'Tech Lead',
-          period: '2025.03 - 2025.06',
-          background: 'Rapid credit business expansion required automated risk control. Manual review was slow and error-prone.',
-          techStack: ['Spring Cloud', 'Drools', 'Redis', 'RocketMQ', 'MySQL', 'Nacos'],
-          solution: 'Built 4-stage pipeline with Drools: Data Collection → Feature Computation → Rule Matching → Decision Output; Nacos for dynamic rule updates; RocketMQ for async event processing.',
-          outcome: 'Full automated risk pipeline; approval efficiency up 300%; fraud detection 95%+; manual review reduced 70%.',
-          highlights: [
-            'Designed 4-stage risk pipeline: collection → computation → matching → output',
-            'Built 100+ hot-reloadable risk rules with Drools engine',
-            'Redis-cached user profiles with <200ms decision latency',
-            'Implemented full-link event sourcing for audit traceability'
-          ],
-          responsibilities: [
-            '0-to-1 risk system architecture design',
-            'Core decision engine development',
-            'External data source integration (credit bureau/anti-fraud)',
-            'Risk monitoring dashboard and alerting system'
+            'Core architecture design and backend capabilities.',
+            'Agent execution pipeline and multi-turn reasoning logic.',
+            'RAG vector retrieval module and context mechanisms.',
+            'Flowable orchestration and Sandbox planning.'
           ]
         },
         {
@@ -662,65 +501,62 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
           name: 'Messaging Platform Refactor',
           role: 'System Design & Core Dev',
           period: '2024.03 - 2024.05',
-          background: 'Regulatory crackdown on SMS channels caused frequent blocks. Original system was tightly coupled with providers, requiring 7+ days per channel switch.',
-          techStack: ['Groovy', 'RocketMQ', 'Strategy Pattern', 'SpringBoot', 'Redis', 'MySQL'],
-          solution: 'Dual-layer adapter architecture (unified protocol + channel adapter); Groovy script for hot-reload routing config; Smart re-routing with automatic failover.',
-          outcome: 'New channel access in 1 day; Delivery rate 96%; Collection reach up 40%; Complaint rate down 35%.',
+          background: 'Strict regulations caused frequent SMS channel blocks. Legacy system had hardcoded integration (7 days/channel) and no smart routing.',
+          techStack: ['Groovy', 'RocketMQ', 'Spring Boot', 'Redis', 'MySQL'],
+          solution: 'Dual-layer adapter architecture; Groovy script for hot-reload mapping; Smart routing strategy for failover via channel health monitoring.',
+          outcome: 'Channel integration cut from 7 days to 1 day; Delivery rate up to 96%; Config-driven tests cut effort by 60%.',
           highlights: [
-            'Dual-layer adapter architecture fully decoupling business and channels',
-            'Groovy script engine for hot-reload channel mapping rules',
-            'Strategy Pattern based smart routing with health, delivery rate, and cost optimization',
-            'DLQ + retry mechanism pushing delivery success from 92% to 99.5%'
+            'Dual-layer adapter (Inbound/Outbound) for seamless parameter translation.',
+            'Hot-reloading of new channels via Groovy scripts without server restarts.',
+            'Smart routing strategy for real-time failover to backup channels.',
+            'Configuration-driven testing reduced mock development by 80%.'
           ],
           responsibilities: [
-            'Overall architecture design and tech review',
-            'Groovy script engine and rule management backend',
-            'RocketMQ delivery optimization (ordered/transactional/DLQ)',
-            'Load testing and performance tuning'
+            'Overall architecture design and interface standardization.',
+            'Core Groovy script dynamic configuration development.',
+            'Testing, validation and production rollout.'
           ]
         },
         {
-          id: 'trading-platform',
-          name: 'Insurance Trading Platform Refactor',
-          role: 'Core Tech Lead',
-          period: '2021.09 - 2021.12',
-          background: 'Severe coupling with 3000+ line enum files, cyclomatic complexity >100 in core methods, 15+ days for new business onboarding.',
-          techStack: ['DDD', 'Design Patterns', 'Java', 'MySQL', 'Spring Boot', 'RocketMQ'],
-          solution: 'DDD-based domain boundary separation (4 domains); Enum + Strategy Pattern for branch elimination; State Pattern for transaction lifecycle with event-driven transitions.',
-          outcome: 'New business onboarding 15 -> 5 days; Bug rate down 70%; Core API latency reduced 35%; Maintainability 65 -> 92.',
+          id: 'zhongan-quality',
+          name: 'Preservation System Quality Upgrade',
+          role: 'Project Lead',
+          period: '2023.05 - 2023.08',
+          background: 'System faced low test coverage (70%), code smells, long processing times, and unencrypted sensitive data posing compliance risks.',
+          techStack: ['Java', 'Spring Boot', 'JUnit', 'Swagger', 'MySQL'],
+          solution: 'Upgraded testing framework; refactored core paths; implemented full-link encryption for ID/Bank cards; standardized logs and Swagger docs.',
+          outcome: 'Coverage up to 90% (98% auto-pass); processing time cut by 30%; troubleshooting under 30 mins; eliminated data leak risks.',
           highlights: [
-            'DDD modeling with 4 domain boundaries (Purchase/Surrender/Claims/Renewal)',
-            'Replaced 3000+ line if-else with Enum + Strategy, complexity from 100+ to 15',
-            'State Pattern for transaction lifecycle with domain event driven transitions',
-            'Designed SPI extension points for zero-code new product onboarding'
+            'Systematic code cleanup dropping cyclomatic complexity by 40%.',
+            'Full-link encryption for sensitive financial data.',
+            'Standardized log levels and formatting, boosting debug speed by 50%.',
+            'Cross-team communication improved by 60% via Swagger docs.'
           ],
           responsibilities: [
-            'Led DDD domain modeling and architecture design',
-            'Core refactoring development and code review',
-            'Planned incremental migration with zero production incidents',
-            'Architecture documentation and team knowledge sharing'
+            'Strategy and prioritization for system-wide optimization.',
+            'Testing framework upgrade and refactoring execution.',
+            'Encryption rules design and documentation standard.'
           ]
         },
         {
-          id: 'contract-microservice',
-          name: 'Contract Lock Microservice Migration',
-          role: 'Architecture Planning',
-          period: '2019.08 - 2020.03',
-          background: 'Legacy 500k+ LOC monolith with severe coupling, high deployment risk, no monitoring, 40+ min deploy time.',
-          techStack: ['Spring Cloud', 'Seata', 'RabbitMQ', 'Docker', 'Nginx', 'MySQL'],
-          solution: 'Split into 8 microservices by domain; Local message table for distributed transactions (lower intrusion than Seata); Docker + Nginx for deployment.',
-          outcome: 'Fault isolation 90%+; Availability 99.95%; Transaction consistency 100%; Deploy time 40min -> 5min.',
+          id: 'duxiaoman-msg',
+          name: 'Insurance Messaging Middle Platform',
+          role: 'Backend Dev',
+          period: '2020.05 - 2021.03',
+          background: 'Needed to consolidate scattered messaging channels into a unified platform supporting AB testing and monitoring to boost insurance renewal rates.',
+          techStack: ['Spring Boot', 'Redis', 'MySQL', 'RocketMQ', 'Vue'],
+          solution: 'Multi-channel access design; "binlog+MQ+double delete" for cache consistency; built AB testing & gray release dashboard.',
+          outcome: 'Renewal rate up 15%; peak latency dropped from 30s to <2s; policy deployment cut from 3 days to 1 day.',
           highlights: [
-            'Split 500k LOC monolith into 8 independent microservices by business domain',
-            'Designed local message table + MQ eventual consistency for cross-service transactions',
-            'Built code generation tool for auto-generating Controller/Service/Mapper',
-            'Docker containerized deployment, reducing deploy time from 40 to 5 minutes'
+            'Unified Voice, SMS, WeChat channels with 99%+ success rate.',
+            'Cache consistency of 99.9% under high concurrency using binlog+MQ.',
+            'Pre-processed offline messages to relieve real-time DB pressure.',
+            'Designed multi-dimensional data dashboard for AB tests.'
           ],
           responsibilities: [
-            'Microservice decomposition strategy and boundary definition',
-            'Distributed transaction solution design and core development',
-            'Automated deployment and monitoring system setup',
-            'Technical review sessions and team training'
+            '0-to-1 platform architecture and core module development.',
+            'Multi-channel design and cache consistency solutions.',
+            'Led fullstack team to deliver AB testing dashboards.'
           ]
         }
       ]
@@ -731,35 +567,35 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
       posts: [
         {
           id: '1',
-          title: 'Monolith to Microservices: Contract Lock Migration',
-          summary: 'A deep dive into splitting a 500k LOC legacy system and implementing distributed transactions with eventual consistency.',
-          date: '2024-05-20',
+          title: 'Enterprise Agent Platform & LangGraph',
+          summary: 'A deep dive into building an Enterprise Agent Platform using LangChain and LangGraph, supporting multi-turn reasoning and RAG context management.',
+          date: '2026-02-15',
           readTime: '15 min',
-          tags: ['Microservices', 'Architecture']
+          tags: ['AI Agent', 'LangGraph', 'Architecture']
         },
         {
           id: '2',
-          title: 'DDD in Financial Transaction Platform',
-          summary: 'Refactoring complex business logic using Domain-Driven Design patterns for rapid business capability reuse.',
-          date: '2024-02-15',
+          title: 'Messaging Platform High-Availability Refactor',
+          summary: 'Case study on leveraging Groovy dynamic routing and dual-layer architecture for seamless message channel integration.',
+          date: '2024-06-10',
           readTime: '12 min',
-          tags: ['DDD', 'Refactoring']
+          tags: ['Message Platform', 'Groovy', 'Design Patterns']
         },
         {
           id: '3',
-          title: 'RocketMQ Tuning Under High Concurrency',
-          summary: 'Thread model adjustment, consumption optimization, and partition expansion for handling tens of millions of messages.',
-          date: '2024-04-10',
+          title: 'Cache Consistency Under High Concurrency',
+          summary: 'Technical breakdown of the binlog+MQ+double-delete architecture to ensure Redis & MySQL consistency at massive scale.',
+          date: '2021-04-20',
           readTime: '10 min',
-          tags: ['RocketMQ', 'Performance']
+          tags: ['Redis', 'High Concurrency', 'Consistency']
         },
         {
           id: '4',
-          title: 'Building Enterprise RAG System with LangChain4J + Dify',
-          summary: 'End-to-end guide on building RAG pipeline with LangChain4J and orchestrating AI agents with Dify workflow for enterprise knowledge Q&A.',
-          date: '2025-01-15',
-          readTime: '18 min',
-          tags: ['AI', 'RAG', 'LangChain4J']
+          title: 'Refactoring Legacy Systems Safely',
+          summary: 'Strategies for lifting unit test coverage and eliminating code smells in financial core systems without downtime.',
+          date: '2023-09-05',
+          readTime: '14 min',
+          tags: ['Refactoring', 'Code Quality', 'Testing']
         }
       ]
     }
