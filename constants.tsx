@@ -101,6 +101,24 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
             { name: '团队管理', icon: '👥' },
           ]
         },
+        '系统治理 & 稳定性': {
+          icon: 'shield',
+          items: [
+            { name: '可观测性', icon: '📈' },
+            { name: '链路追踪', icon: '🧭' },
+            { name: '性能调优', icon: '⚡' },
+            { name: '容灾治理', icon: '🛡️' },
+          ]
+        },
+        '业务架构 & 交付': {
+          icon: 'server',
+          items: [
+            { name: '领域建模', icon: '🏗️' },
+            { name: '复杂流程设计', icon: '🧠' },
+            { name: '技术方案落地', icon: '📐' },
+            { name: '跨团队协同', icon: '🤝' },
+          ]
+        },
       }
     },
     experience: {
@@ -395,6 +413,24 @@ export const RESUME_DATA: Record<'zh' | 'en', ResumeData> = {
             { name: 'Agile Dev', icon: '🏃' },
             { name: 'Arch Design', icon: '🏛️' },
             { name: 'Team Mgmt', icon: '👥' },
+          ]
+        },
+        'Governance & Reliability': {
+          icon: 'shield',
+          items: [
+            { name: 'Observability', icon: '📈' },
+            { name: 'Tracing', icon: '🧭' },
+            { name: 'Performance Tuning', icon: '⚡' },
+            { name: 'Disaster Recovery', icon: '🛡️' },
+          ]
+        },
+        'Domain & Delivery': {
+          icon: 'server',
+          items: [
+            { name: 'Domain Modeling', icon: '🏗️' },
+            { name: 'Complex Workflow Design', icon: '🧠' },
+            { name: 'Solution Delivery', icon: '📐' },
+            { name: 'Cross-team Collaboration', icon: '🤝' },
           ]
         },
       }

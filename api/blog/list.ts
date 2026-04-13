@@ -1,6 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getRepoTree, getFileContent } from './_lib/github.js';
-import { parseArticle, type BlogArticleMeta } from './_lib/parse.js';
+import { parseArticle, normalizeArticleDate, type BlogArticleMeta } from './_lib/parse.js';
+
+function getArticleTimestamp(dateText: string): number {
+  const normalizedDateText = normalizeArticleDate(dateText)
+    .replace(/\./g, '-')
+    .replace(/\s+/g, ' ');
+  const timestamp = Date.parse(normalizedDateText);
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
@@ -33,8 +41,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // 4. 按 created 倒序
-    articles.sort((a, b) => (b.created > a.created ? 1 : -1));
+    // 4. 按 created 时间倒序，无法解析的日期排最后
+    articles.sort((a, b) => getArticleTimestamp(b.created) - getArticleTimestamp(a.created));
 
     // 5. 缓存：Edge 5 分钟，后台刷新 10 分钟
     res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');

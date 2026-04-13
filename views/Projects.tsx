@@ -34,7 +34,7 @@ function getProjectTag(
     'msg-platform-refactor': {
       zh: '消息中间件', en: 'Messaging',
       icon: <MessageSquare size={12} strokeWidth={1.5} />,
-      color: 'from-[#bf5af2]/10 to-transparent border-[#bf5af2]/20 text-[#bf5af2]'
+      color: 'from-white/[0.08] to-transparent border-white/[0.12] text-white/70'
     },
     'trading-platform': {
       zh: '领域重构', en: 'DDD Refactor',
@@ -76,7 +76,7 @@ const Projects: React.FC<ProjectsProps> = ({ data }) => {
     <div className="min-h-screen bg-background pt-[52px] pb-32 overflow-x-hidden">
       {/* 背景光晕 */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 right-0 w-[600px] h-[600px] bg-secondary/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute -top-40 right-0 w-[600px] h-[600px] bg-white/[0.03] rounded-full blur-[100px]" />
         <div className="absolute bottom-0 -left-40 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[100px]" />
       </div>
 
@@ -124,14 +124,14 @@ const Projects: React.FC<ProjectsProps> = ({ data }) => {
                 {/* 卡片顶部高光 */}
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
                 <div className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent ${
-                  isAI ? 'via-[#30d158]/30' : 'via-[#bf5af2]/30'
+                  isAI ? 'via-[#30d158]/24' : 'via-white/[0.12]'
                 } to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
                 {/* 背景装饰 */}
                 <div className={`absolute -right-16 -top-16 w-56 h-56 rounded-full blur-3xl transition-all duration-700 pointer-events-none ${
                   isAI
                     ? 'bg-accent/[0.05] group-hover:bg-accent/[0.1]'
-                    : 'bg-secondary/[0.05] group-hover:bg-secondary/[0.1]'
+                    : 'bg-white/[0.04] group-hover:bg-white/[0.07]'
                 }`} />
 
                 <div className="relative z-10 p-7 md:p-9">
@@ -152,7 +152,7 @@ const Projects: React.FC<ProjectsProps> = ({ data }) => {
                           {project.name}
                         </h2>
                         <span className="inline-block px-3 py-1 text-[12px] rounded-full font-medium
-                          bg-secondary/[0.08] text-secondary/80 border border-secondary/[0.15]">
+                          bg-white/[0.05] text-white/65 border border-white/[0.1]">
                           {project.role}
                         </span>
                         <p className="text-[12px] text-white/25 mt-2 font-medium">{project.period}</p>

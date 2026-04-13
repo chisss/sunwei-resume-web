@@ -352,7 +352,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
           <div className="section-divider mt-5" />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-stretch">
           {Object.entries(data.skills.categories).map(([category, categoryData], idx) => {
             const catData = categoryData as { icon: string; items: { name: string; icon: string }[] };
             const IconComponent = SKILL_CATEGORY_ICONS[catData.icon];
@@ -368,7 +368,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
                   duration: 0.55,
                   ease: [0.22, 1, 0.36, 1]
                 }}
-                className="group relative rounded-2xl p-5 border border-white/[0.07] bg-surface
+                className="group relative flex h-full flex-col rounded-2xl p-5 border border-white/[0.07] bg-surface
                   hover:border-white/[0.12] transition-all duration-400
                   hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)]
                   hover:-translate-y-1"
@@ -394,7 +394,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
                 </div>
 
                 {/* 技能标签 */}
-                <div className="flex flex-wrap gap-1.5">
+                <div className="mt-auto flex flex-wrap content-start gap-1.5">
                   {catData.items.map((skill) => (
                     <span
                       key={skill.name}

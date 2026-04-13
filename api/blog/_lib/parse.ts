@@ -1,5 +1,39 @@
 import matter from 'gray-matter';
 
+function normalizeDatePart(value: string): string {
+  return value.padStart(2, '0');
+}
+
+export function normalizeArticleDate(dateValue: unknown): string {
+  if (!dateValue) {
+    return '';
+  }
+
+  if (dateValue instanceof Date) {
+    return Number.isNaN(dateValue.getTime()) ? '' : dateValue.toISOString().slice(0, 10);
+  }
+
+  const rawText = String(dateValue).trim();
+  if (!rawText) {
+    return '';
+  }
+
+  const normalizedText = rawText
+    .replace(/[年./]/g, '-')
+    .replace(/月/g, '-')
+    .replace(/日/g, '')
+    .replace(/\s+/g, ' ');
+
+  const dateMatch = normalizedText.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:\s+(.*))?$/);
+  if (dateMatch) {
+    const [, year, month, day, timePart] = dateMatch;
+    const safeDate = `${year}-${normalizeDatePart(month)}-${normalizeDatePart(day)}`;
+    return timePart ? `${safeDate} ${timePart.trim()}` : safeDate;
+  }
+
+  return rawText;
+}
+
 export interface BlogArticleMeta {
   slug: string;
   path: string;
@@ -41,8 +75,8 @@ export function parseArticle(rawContent: string, filePath: string): BlogArticleF
     path: filePath,
     title: frontmatter.title || fileName.replace(/\.md$/, ''),
     tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
-    created: frontmatter.created ? String(frontmatter.created) : '',
-    updated: frontmatter.updated ? String(frontmatter.updated) : '',
+    created: normalizeArticleDate(frontmatter.created),
+    updated: normalizeArticleDate(frontmatter.updated),
     category: frontmatter.category || category || '未分类',
     content,
     readTime: estimateReadTime(content),

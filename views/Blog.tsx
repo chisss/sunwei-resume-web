@@ -148,7 +148,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
       <div className="min-h-screen bg-background pt-[52px] pb-32 overflow-x-hidden">
         {/* 背景光晕 */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-secondary/[0.04] rounded-full blur-[100px]" />
+          <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-[100px]" />
         </div>
 
         <div className="relative max-w-3xl mx-auto px-5 sm:px-8 pt-16">
@@ -178,7 +178,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
             className="mb-12"
           >
             {/* 分类标签 */}
-            <div className="flex items-center gap-2 text-[12px] text-secondary/70 mb-4">
+            <div className="flex items-center gap-2 text-[12px] text-primary/70 mb-4">
               <FolderOpen size={13} strokeWidth={1.5} />
               <span className="font-medium">{currentArticle.category}</span>
             </div>
@@ -206,7 +206,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
                 <span
                   key={tag}
                   className="px-2.5 py-1 rounded-full text-[11px] font-medium
-                    bg-secondary/[0.08] text-secondary/70 border border-secondary/[0.15]"
+                    bg-primary/[0.08] text-primary/75 border border-primary/[0.15]"
                 >
                   #{tag}
                 </span>
@@ -230,22 +230,22 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
               prose-h3:text-[clamp(1rem,2vw,1.25rem)] prose-h3:text-white/80 prose-h3:mt-8 prose-h3:mb-3
               prose-h4:text-white/70 prose-h4:mt-6 prose-h4:mb-2
               prose-p:text-white/50 prose-p:leading-[1.8] prose-p:mb-5 prose-p:text-[15px]
-              prose-a:text-secondary/80 prose-a:no-underline prose-a:font-medium
-                hover:prose-a:text-secondary hover:prose-a:underline
+              prose-a:text-primary/80 prose-a:no-underline prose-a:font-medium
+                hover:prose-a:text-primary hover:prose-a:underline
               prose-strong:text-white/80 prose-strong:font-semibold
               prose-em:text-white/50
-              prose-code:text-secondary/80 prose-code:bg-white/[0.06] prose-code:border prose-code:border-white/[0.08]
+              prose-code:text-primary/80 prose-code:bg-white/[0.06] prose-code:border prose-code:border-white/[0.08]
                 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-[13px]
                 prose-code:before:content-none prose-code:after:content-none
               prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-white/[0.08]
                 prose-pre:rounded-2xl prose-pre:shadow-[0_8px_32px_rgba(0,0,0,0.4)]
                 prose-pre:text-[13px]
-              prose-blockquote:border-l-2 prose-blockquote:border-secondary/40
+              prose-blockquote:border-l-2 prose-blockquote:border-primary/30
                 prose-blockquote:bg-white/[0.02] prose-blockquote:rounded-r-xl
                 prose-blockquote:py-3 prose-blockquote:px-5 prose-blockquote:my-6
                 prose-blockquote:text-white/40 prose-blockquote:not-italic
               prose-li:text-white/50 prose-li:text-[15px] prose-li:leading-[1.7]
-              prose-li:marker:text-secondary/50
+              prose-li:marker:text-primary/45
               prose-ul:my-4 prose-ol:my-4
               prose-table:border-collapse prose-table:w-full
               prose-th:bg-white/[0.04] prose-th:text-white/70 prose-th:font-semibold
@@ -343,7 +343,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
     <div className="min-h-screen bg-background pt-[52px] pb-32 overflow-x-hidden">
       {/* 背景光晕 */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-secondary/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-white/[0.03] rounded-full blur-[100px]" />
         <div className="absolute bottom-0 -left-32 w-[400px] h-[400px] bg-primary/[0.03] rounded-full blur-[100px]" />
       </div>
 
@@ -357,9 +357,9 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
         >
           {/* 图标 */}
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-3xl
-            bg-secondary/[0.08] border border-secondary/[0.15] mb-7
-            shadow-[0_0_32px_rgba(191,90,242,0.15)]">
-            <BookOpen size={24} className="text-secondary/80" strokeWidth={1.5} />
+            bg-primary/[0.08] border border-primary/[0.15] mb-7
+            shadow-[0_0_32px_rgba(0,113,227,0.12)]">
+            <BookOpen size={24} className="text-primary/80" strokeWidth={1.5} />
           </div>
 
           <span className="text-label mb-3 block">
@@ -390,7 +390,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
               onClick={() => handleCategoryClick(key)}
               className={`px-3.5 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 ${
                 currentCategory === key
-                  ? 'bg-secondary/[0.15] text-secondary border border-secondary/[0.3] shadow-[0_0_16px_rgba(191,90,242,0.15)]'
+                  ? 'bg-primary/[0.14] text-primary border border-primary/[0.28] shadow-[0_0_16px_rgba(0,113,227,0.12)]'
                   : 'bg-white/[0.04] text-white/40 hover:bg-white/[0.08] hover:text-white/70 border border-white/[0.06] hover:border-white/[0.12]'
               }`}
             >
@@ -416,7 +416,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
                 onClick={() => handleTagClick(tag)}
                 className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 ${
                   currentTag === tag
-                    ? 'bg-secondary/[0.12] text-secondary/80 border border-secondary/[0.25]'
+                    ? 'bg-primary/[0.12] text-primary/80 border border-primary/[0.22]'
                     : 'bg-white/[0.03] text-white/30 hover:text-white/55 border border-transparent hover:border-white/[0.08]'
                 }`}
               >
@@ -451,15 +451,15 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
                   cursor-pointer overflow-hidden"
               >
                 {/* hover 装饰光 */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/[0.04] rounded-full blur-2xl
-                  group-hover:bg-secondary/[0.08] transition-colors duration-400 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/[0.03] rounded-full blur-2xl
+                  group-hover:bg-primary/[0.06] transition-colors duration-400 pointer-events-none" />
                 {/* 顶部高光线 */}
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-secondary/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
 
                 <div className="relative z-10">
                   {/* 分类 + 元信息 */}
                   <div className="flex flex-wrap items-center gap-3 text-[11px] font-medium text-white/30 mb-3">
-                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-secondary/60">
+                    <span className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-primary/70">
                       {article.category}
                     </span>
                     <div className="flex items-center gap-1.5">
@@ -491,7 +491,7 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
                   </div>
 
                   {/* 阅读更多 */}
-                  <div className="flex items-center gap-1.5 text-[12px] font-medium text-white/25 group-hover:text-secondary/70 transition-colors duration-200">
+                  <div className="flex items-center gap-1.5 text-[12px] font-medium text-white/25 group-hover:text-primary/70 transition-colors duration-200">
                     {isZh ? '阅读全文' : 'Read more'}
                     <ArrowRight
                       size={13}
