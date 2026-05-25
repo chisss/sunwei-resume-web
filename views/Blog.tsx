@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -7,7 +7,7 @@ import rehypeRaw from 'rehype-raw';
 import { ResumeData } from '../types';
 import {
   BookOpen, Calendar, Clock, ArrowRight, ArrowLeft,
-  FolderOpen, Tag
+  FolderOpen, Tag, List, ChevronRight
 } from 'lucide-react';
 import { useBlogList, useBlogArticle } from '../hooks/useBlog';
 
@@ -19,6 +19,95 @@ interface BlogProps {
 const SkeletonBlock = ({ className }: { className?: string }) => (
   <div className={`rounded-lg shimmer ${className}`} />
 );
+
+// 从 markdown 内容中提取目录
+interface TocItem {
+  level: number;
+  text: string;
+  id: string;
+}
+
+function extractToc(content: string, articleTitle: string): TocItem[] {
+  const lines = content.split('\n');
+  const toc: TocItem[] = [];
+  let inCodeBlock = false;
+
+  for (const line of lines) {
+    if (line.trim().startsWith('```')) {
+      inCodeBlock = !inCodeBlock;
+      continue;
+    }
+    if (inCodeBlock) continue;
+
+    const match = line.match(/^(#{2,4})\s+(.+)$/);
+    if (match) {
+      const text = match[2].replace(/[`*_~\[\]]/g, '').trim();
+      // 跳过与文章标题重复的
+      if (text.includes(articleTitle.slice(0, 10))) continue;
+      const id = text
+        .toLowerCase()
+        .replace(/[^\w\u4e00-\u9fff]+/g, '-')
+        .replace(/^-|-$/g, '');
+      toc.push({ level: match[1].length, text, id });
+    }
+  }
+  return toc;
+}
+
+// 目录组件
+const TableOfContents: React.FC<{ toc: TocItem[]; isZh: boolean }> = ({ toc, isZh }) => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  if (toc.length < 2) return null;
+
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.15, duration: 0.5 }}
+      className="mb-10 rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden"
+    >
+      <button
+        onClick={() => setCollapsed(!collapsed)}
+        className="w-full flex items-center justify-between px-5 py-3.5
+          text-[13px] font-medium text-white/50 hover:text-white/70
+          transition-colors duration-200"
+      >
+        <span className="flex items-center gap-2">
+          <List size={14} strokeWidth={1.5} />
+          {isZh ? '目录' : 'Table of Contents'}
+          <span className="text-[11px] text-white/25">({toc.length})</span>
+        </span>
+        <ChevronRight
+          size={14}
+          strokeWidth={1.5}
+          className={`transition-transform duration-200 ${collapsed ? '' : 'rotate-90'}`}
+        />
+      </button>
+
+      {!collapsed && (
+        <div className="px-5 pb-4 space-y-0.5">
+          {toc.map((item, i) => (
+            <a
+              key={i}
+              href={`#${item.id}`}
+              className={`block py-1.5 text-[12px] leading-relaxed transition-colors duration-150
+                hover:text-primary/80 ${
+                  item.level === 2
+                    ? 'text-white/45 font-medium'
+                    : item.level === 3
+                    ? 'text-white/30 pl-4'
+                    : 'text-white/25 pl-8'
+                }`}
+            >
+              {item.text}
+            </a>
+          ))}
+        </div>
+      )}
+    </motion.nav>
+  );
+};
 
 const Blog: React.FC<BlogProps> = ({ data }) => {
   const isZh = data.blog.title.includes('技术') || data.blog.title.includes('洞见');
@@ -55,7 +144,9 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
         tagCount[t] = (tagCount[t] || 0) + 1;
       });
     });
+    // 只保留出现次数 >= 2 的标签
     return Object.entries(tagCount)
+      .filter(([, count]) => count >= 2)
       .sort((a, b) => b[1] - a[1])
       .map(([tag, count]) => ({ tag, count }));
   }, [blogArticles]);
@@ -144,6 +235,8 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
 
   // ========= 文章详情视图 =========
   if (currentSlug && currentArticle) {
+    const toc = extractToc(currentArticle.content, currentArticle.title);
+
     return (
       <div className="min-h-screen bg-background pt-[52px] pb-32 overflow-x-hidden">
         {/* 背景光晕 */}
@@ -217,6 +310,9 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
             <div className="mt-8 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
           </motion.header>
 
+          {/* 目录 */}
+          <TableOfContents toc={toc} isZh={isZh} />
+
           {/* 文章正文 */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -272,6 +368,22 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
                     return null;
                   }
                   return <h1>{children}</h1>;
+                },
+                // 为 h2/h3/h4 添加 id 以支持目录锚点跳转
+                h2: ({ children }) => {
+                  const text = String(children).replace(/[`*_~\[\]]/g, '').trim();
+                  const id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
+                  return <h2 id={id}>{children}</h2>;
+                },
+                h3: ({ children }) => {
+                  const text = String(children).replace(/[`*_~\[\]]/g, '').trim();
+                  const id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
+                  return <h3 id={id}>{children}</h3>;
+                },
+                h4: ({ children }) => {
+                  const text = String(children).replace(/[`*_~\[\]]/g, '').trim();
+                  const id = text.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '');
+                  return <h4 id={id}>{children}</h4>;
                 },
                 // 外部链接新标签打开
                 a: ({ href, children, ...props }) => (
@@ -405,23 +517,24 @@ const Blog: React.FC<BlogProps> = ({ data }) => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="flex flex-wrap items-center gap-2 mb-10"
+            className="flex flex-wrap items-center gap-1.5 mb-10 p-3 rounded-2xl bg-white/[0.02] border border-white/[0.05]"
           >
-            <div className="flex items-center gap-1.5 text-white/20 mr-1">
+            <div className="flex items-center gap-1.5 text-white/25 mr-2 pl-1">
               <Tag size={13} strokeWidth={1.5} />
+              <span className="text-[11px] font-medium">{isZh ? '标签' : 'Tags'}</span>
             </div>
             {allTags.map(({ tag, count }) => (
               <button
                 key={tag}
                 onClick={() => handleTagClick(tag)}
-                className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all duration-200 ${
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all duration-200 ${
                   currentTag === tag
-                    ? 'bg-primary/[0.12] text-primary/80 border border-primary/[0.22]'
-                    : 'bg-white/[0.03] text-white/30 hover:text-white/55 border border-transparent hover:border-white/[0.08]'
+                    ? 'bg-primary/[0.14] text-primary/90 border border-primary/[0.25] shadow-[0_0_8px_rgba(0,113,227,0.1)]'
+                    : 'bg-white/[0.04] text-white/35 hover:text-white/60 hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.1]'
                 }`}
               >
                 #{tag}
-                <span className="ml-1 opacity-40 text-[10px]">{count}</span>
+                <span className="ml-1 text-[10px] opacity-50">{count}</span>
               </button>
             ))}
           </motion.div>

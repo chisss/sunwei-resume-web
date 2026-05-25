@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sunwei-resume-web.vercel.app/sitemap.xml

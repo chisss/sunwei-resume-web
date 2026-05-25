@@ -5,15 +5,30 @@ import Home from './views/Home';
 import Experience from './views/Experience';
 import Projects from './views/Projects';
 import Blog from './views/Blog';
+import SEO from './components/SEO';
+import StructuredData from './components/StructuredData';
 import { RESUME_DATA } from './constants';
 import { Language } from './types';
 import { preloadBlogList } from './hooks/useBlog';
 
-const PAGE_TITLES: Record<string, Record<Language, string>> = {
-  '/': { zh: '孙伟 | 资深Java工程师', en: 'Sun Wei | Senior Java Engineer' },
-  '/experience': { zh: '工作经历 | 孙伟', en: 'Experience | Sun Wei' },
-  '/projects': { zh: '项目实战 | 孙伟', en: 'Projects | Sun Wei' },
-  '/blog': { zh: '技术博客 | 孙伟', en: 'Blog | Sun Wei' },
+// 每页 SEO 配置
+const PAGE_SEO: Record<string, Record<Language, { title: string; description: string }>> = {
+  '/': {
+    zh: { title: '孙伟 | 资深Java工程师', description: '孙伟 - 资深Java工程师，8年后端开发经验，专注微服务架构、金融科技与AI智能化，精通Spring Cloud、Kubernetes等技术栈' },
+    en: { title: 'Sun Wei | Senior Java Engineer', description: 'Sun Wei - Senior Java Engineer with 8 years of backend development experience, specializing in microservices architecture, fintech, and AI integration' },
+  },
+  '/experience': {
+    zh: { title: '工作经历 | 孙伟', description: '孙伟的工作经历 - 曾任职于度小满金融、众安保险等头部企业，深耕互联网金融与保险领域' },
+    en: { title: 'Experience | Sun Wei', description: 'Work experience of Sun Wei - Previously at Du Xiaoman Finance, ZhongAn Insurance, specializing in fintech and insurance' },
+  },
+  '/projects': {
+    zh: { title: '项目实战 | 孙伟', description: '孙伟的项目实战经验 - 微服务架构设计、AI Agent平台搭建、信贷核心系统开发等' },
+    en: { title: 'Projects | Sun Wei', description: 'Project portfolio of Sun Wei - Microservices architecture, AI Agent platform, credit core system development' },
+  },
+  '/blog': {
+    zh: { title: '技术博客 | 孙伟', description: '孙伟的技术博客 - 分享Java、微服务、AI Agent、系统架构等技术实践与思考' },
+    en: { title: 'Blog | Sun Wei', description: 'Technical blog by Sun Wei - Sharing insights on Java, microservices, AI Agent, and system architecture' },
+  },
 };
 
 function App() {
@@ -30,16 +45,13 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  // Dynamic page title
-  useEffect(() => {
-    const title = PAGE_TITLES[location.pathname]?.[lang] || PAGE_TITLES['/'][lang];
-    document.title = title;
-  }, [location.pathname, lang]);
-
   const data = RESUME_DATA[lang];
+  const pageSeo = PAGE_SEO[location.pathname]?.[lang] || PAGE_SEO['/'][lang];
 
   return (
     <div className="min-h-screen bg-background text-white selection:bg-primary selection:text-white">
+      <SEO title={pageSeo.title} description={pageSeo.description} path={location.pathname} lang={lang} />
+      <StructuredData />
       <Navbar lang={lang} setLang={setLang} data={data.nav} />
 
       <main className="relative z-0">
