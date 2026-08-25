@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import './index.css';
 
 const rootElement = document.getElementById('root');
@@ -16,6 +18,8 @@ root.render(
         <HelmetProvider>
             <BrowserRouter>
                 <App />
+                <Analytics />
+                <SpeedInsights />
             </BrowserRouter>
         </HelmetProvider>
     </React.StrictMode>
